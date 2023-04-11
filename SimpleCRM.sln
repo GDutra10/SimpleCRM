@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{2359C6F4-0EC2-4239-9FFD-35D909B00732}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{07EF96D7-2862-4B72-B582-3C85C830B4D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{C5E451B7-6FD0-4517-8EA7-CFF4A71F0006}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Infra.Repository", "src\Infra\SimpleCRM.Infra.Repository\SimpleCRM.Infra.Repository.csproj", "{B65C3918-8BF2-4979-B729-BC1C5CCC8CBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Domain.Service", "src\Domain\SimpleCRM.Domain.Service\SimpleCRM.Domain.Service.csproj", "{A98240BA-0943-40C6-87B7-CE2466FABA18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Domain.Common", "src\Domain\SimpleCRM.Domain.Common\SimpleCRM.Domain.Common.csproj", "{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.WebAPI", "src\Application\SimpleCRM.WebAPI\SimpleCRM.WebAPI.csproj", "{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B65C3918-8BF2-4979-B729-BC1C5CCC8CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B65C3918-8BF2-4979-B729-BC1C5CCC8CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B65C3918-8BF2-4979-B729-BC1C5CCC8CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B65C3918-8BF2-4979-B729-BC1C5CCC8CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A98240BA-0943-40C6-87B7-CE2466FABA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A98240BA-0943-40C6-87B7-CE2466FABA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A98240BA-0943-40C6-87B7-CE2466FABA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A98240BA-0943-40C6-87B7-CE2466FABA18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B65C3918-8BF2-4979-B729-BC1C5CCC8CBB} = {C5E451B7-6FD0-4517-8EA7-CFF4A71F0006}
+		{A98240BA-0943-40C6-87B7-CE2466FABA18} = {07EF96D7-2862-4B72-B582-3C85C830B4D8}
+		{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D} = {07EF96D7-2862-4B72-B582-3C85C830B4D8}
+		{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816} = {2359C6F4-0EC2-4239-9FFD-35D909B00732}
+	EndGlobalSection
+EndGlobal
