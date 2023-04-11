@@ -1,4 +1,6 @@
-﻿namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
+﻿using SimpleCRM.Domain.Common.Enums;
+
+namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
 
 public class UserRS : BaseRS
 {
@@ -7,4 +9,5 @@ public class UserRS : BaseRS
     public string Name { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string Password { get; set; } = default!;
+    public Role Role { get; set; }
 }

@@ -19,5 +19,6 @@ public class Repository<T> : IRepository<T> where T : IDbRecord
         await DbProvider.SaveAsync(record, cancellationToken);
     }
 
-    public async Task<List<T>> GetAllAsync(ISpecification<T> specification) => await DbProvider.GetAllAsync(specification);
+    public async Task<List<T>> GetAllAsync(ISpecification<T> specification, CancellationToken cancellationToken) 
+        => await DbProvider.GetAllAsync(specification, cancellationToken);
 }

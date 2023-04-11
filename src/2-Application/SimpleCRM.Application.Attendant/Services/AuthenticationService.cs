@@ -8,16 +8,16 @@ using SimpleCRM.Domain.Managers;
 
 namespace SimpleCRM.Application.Attendant.Services;
 
-public class UserService : IUserService
+public class AuthenticationService : IAuthenticationService
 {
-    private readonly ILogger<IUserService> _logger;
+    private readonly ILogger<IAuthenticationService> _logger;
     private readonly IMapper _mapper;
     private readonly IRepository<User> _userRepository;
     private readonly UserManager _userManager;
     private readonly TokenManager _tokenManager;
 
-    public UserService(
-        ILogger<UserService> logger, 
+    public AuthenticationService(
+        ILogger<AuthenticationService> logger, 
         IMapper mapper,
         IRepository<User> userRepository,
         UserManager userManager,
@@ -29,13 +29,16 @@ public class UserService : IUserService
         _userManager = userManager;
         _tokenManager = tokenManager;
     }
-
-    public async Task<UserRS> InsertUserAsync(InsertUserRQ insertUserRQ, CancellationToken cancellationToken)
+    
+    public async Task<LoginRS> TryLoginAsync(LoginRQ loginRQ, CancellationToken cancellationToken)
     {
-        var user = await _userManager
-            .CreateUserAsync(insertUserRQ.Name, insertUserRQ.Email, insertUserRQ.Password, insertUserRQ.Role, cancellationToken);
-        await _userRepository.SaveAsync(user, cancellationToken);
-        
-        return _mapper.Map<User, UserRS>(user);
+        var user = await _userManager.TryLoginAsync(loginRQ.Email, loginRQ.Password, cancellationToken);
+        var accessToken = _tokenManager.GenerateToken(user);
+
+        return new LoginRS()
+        {
+            ExpiresIn = _tokenManager.ExpiresIn,
+            AccessToken = accessToken
+        };
     }
 }

@@ -5,5 +5,5 @@ namespace SimpleCRM.Domain.Contracts.Repositories;
 public interface IRepository<T> where T : IDbRecord
 {
     Task SaveAsync(T record, CancellationToken cancellationToken);
-    Task<List<T>> GetAllAsync(ISpecification<T> specification);
+    Task<List<T>> GetAllAsync(ISpecification<T> specification, CancellationToken cancellationToken);
 }

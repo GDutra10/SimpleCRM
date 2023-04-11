@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -101,8 +102,10 @@ public static class WebApplicationBuilderExtensions
             .AddScoped<IRepository<User>, Repository<User>>()
             // services
             .AddScoped<IUserService, UserService>()
+            .AddScoped<IAuthenticationService, AuthenticationService>()
             // managers
-            .AddScoped<UserManager>();
+            .AddScoped<UserManager>()
+            .AddScoped<TokenManager>();
 
         return builder;
     }

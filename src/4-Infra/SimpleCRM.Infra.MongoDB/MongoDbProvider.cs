@@ -27,9 +27,9 @@ public class MongoDbProvider<T> : IDbProvider<T> where T : IDbRecord
         await _collection.ReplaceOneAsync(filter, record, new ReplaceOptions() { IsUpsert = true }, cancellationToken);
     }
 
-    public async Task<List<T>> GetAllAsync(ISpecification<T> specification)
+    public async Task<List<T>> GetAllAsync(ISpecification<T> specification, CancellationToken cancellationToken)
     {
-        var result = await _collection.FindAsync(specification.ToExpression());
+        var result = await _collection.FindAsync(specification.ToExpression(), cancellationToken:cancellationToken);
         
         return result.ToList();
     }
