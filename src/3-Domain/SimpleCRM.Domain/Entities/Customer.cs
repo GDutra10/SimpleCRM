@@ -4,16 +4,18 @@ namespace SimpleCRM.Domain.Entities;
 
 public class Customer : Record, IDbRecord
 {
-    public string Name { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string Telephone { get; set; } = default!;
+    public string Name { get; internal set; } = default!;
+    public string Email { get; internal set; } = default!;
+    public string Telephone { get; internal set; } = default!;
+    public Guid UserId { get; internal set; }
     
     private Customer(){ }
 
-    public Customer(string name, string email, string telephone)
+    internal Customer(string name, string email, string telephone, Guid userId)
     {
         this.Name = name;
         this.Email = email;
         this.Telephone = telephone;
+        this.UserId = userId;
     }
 }

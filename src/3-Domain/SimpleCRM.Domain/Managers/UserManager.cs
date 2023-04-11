@@ -36,4 +36,14 @@ public class UserManager
 
         return users.First();
     }
+
+    public async Task<User> GetUserAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetAsync(id, cancellationToken);
+
+        if (user is null)
+            throw new NotFoundException("User not found");
+
+        return user;
+    }
 }

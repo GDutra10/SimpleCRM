@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Serializers;
 using SimpleCRM.Domain.Common.Enums;
@@ -23,6 +22,11 @@ public class MongoDbMapper : IDbMapper
         {
             classMap.AutoMap();
             classMap.GetMemberMap(u => u.Role).SetSerializer(new EnumSerializer<Role>(BsonType.String));
+        });
+
+        BsonClassMap.RegisterClassMap<Customer>(classMap =>
+        {
+            classMap.AutoMap();
         });
     }
 }

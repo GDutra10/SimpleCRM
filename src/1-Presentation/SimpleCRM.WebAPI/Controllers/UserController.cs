@@ -21,10 +21,9 @@ public class UserController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(UserRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
-    [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(ErrorRS), (int)HttpStatusCode.InternalServerError)]
-    public async Task<UserRS> InsertUserAsync(InsertUserRQ insertUserRQ, CancellationToken cancellationToken)
+    public async Task<UserRS> UserRegisterAsync(UserRegisterRQ userRegisterRQ, CancellationToken cancellationToken)
     {
-        return await _userService.InsertUserAsync(insertUserRQ, cancellationToken);
+        return await _userService.UserRegisterAsync(userRegisterRQ, cancellationToken);
     }
 }

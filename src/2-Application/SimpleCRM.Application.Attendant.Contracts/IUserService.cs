@@ -4,6 +4,5 @@ namespace SimpleCRM.Application.Attendant.Contracts;
 
 public interface IUserService
 {
-     // Task<LoginRS> LoginAsync(LoginRQ loginRQ, CancellationToken cancellationToken);
-     Task<UserRS> InsertUserAsync(InsertUserRQ insertUserRQ, CancellationToken cancellationToken);
+     Task<UserRS> UserRegisterAsync(UserRegisterRQ userRegisterRQ, CancellationToken cancellationToken);
 }

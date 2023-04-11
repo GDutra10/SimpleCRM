@@ -19,7 +19,6 @@ public class AuthenticationController : ControllerBase
         _authenticationService = authenticationService;
     }
     
-    [Authorize]
     [HttpPost("Login")]
     [ProducesResponseType(typeof(LoginRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]

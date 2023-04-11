@@ -35,6 +35,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddValidatorsFromAssemblyContaining<InsertUserRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<LoginRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<CustomerRegisterRQValidator>();
+
 
         builder.Services
             .AddControllers()
@@ -87,6 +89,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddSimpleCRMAutoMappers(this WebApplicationBuilder builder)
     {
         builder.Services.AddAutoMapper(typeof(UserProfile));
+        builder.Services.AddAutoMapper(typeof(CustomerProfile));
 
         return builder;
     }
@@ -98,14 +101,18 @@ public static class WebApplicationBuilderExtensions
             .AddSingleton<IDbMapper, MongoDbMapper>()
             // providers
             .AddScoped<IDbProvider<User>, MongoDbProvider<User>>()
+            .AddScoped<IDbProvider<Customer>, MongoDbProvider<Customer>>()
             // repositories
             .AddScoped<IRepository<User>, Repository<User>>()
+            .AddScoped<IRepository<Customer>, Repository<Customer>>()
             // services
             .AddScoped<IUserService, UserService>()
             .AddScoped<IAuthenticationService, AuthenticationService>()
+            .AddScoped<ICustomerService, CustomerService>()
             // managers
             .AddScoped<UserManager>()
-            .AddScoped<TokenManager>();
+            .AddScoped<TokenManager>()
+            .AddScoped<CustomerManager>();
 
         return builder;
     }

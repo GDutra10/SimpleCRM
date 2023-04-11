@@ -17,6 +17,14 @@ public class MongoDbProvider<T> : IDbProvider<T> where T : IDbRecord
         _collection = client.GetDatabase(ProviderConstants.DataBase).GetCollection<T>(typeof(T).Name);
     }
 
+    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var filter = Builders<T>.Filter.Eq("_id", id);
+        var result = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
+        
+        return result.FirstOrDefault(cancellationToken);
+    }
+
     public async Task SaveAsync(T record, CancellationToken cancellationToken)
     {
         if (record.Id == Guid.Empty)

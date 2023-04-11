@@ -30,10 +30,10 @@ public class UserService : IUserService
         _tokenManager = tokenManager;
     }
 
-    public async Task<UserRS> InsertUserAsync(InsertUserRQ insertUserRQ, CancellationToken cancellationToken)
+    public async Task<UserRS> UserRegisterAsync(UserRegisterRQ userRegisterRQ, CancellationToken cancellationToken)
     {
         var user = await _userManager
-            .CreateUserAsync(insertUserRQ.Name, insertUserRQ.Email, insertUserRQ.Password, insertUserRQ.Role, cancellationToken);
+            .CreateUserAsync(userRegisterRQ.Name, userRegisterRQ.Email, userRegisterRQ.Password, userRegisterRQ.Role, cancellationToken);
         await _userRepository.SaveAsync(user, cancellationToken);
         
         return _mapper.Map<User, UserRS>(user);

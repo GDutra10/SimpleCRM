@@ -5,10 +5,10 @@ namespace SimpleCRM.Domain.Entities;
 
 public class User : Record, IDbRecord
 {
-    public string Name { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string Password { get; set; } = default!;
-    public Role Role { get; set; }
+    public string Name { get; internal set; } = default!;
+    public string Email { get; internal set; } = default!;
+    public string Password { get; internal set; } = default!;
+    public Role Role { get; internal set; }
     
     private User(){ }
 

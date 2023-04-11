@@ -14,6 +14,11 @@ public class Repository<T> : IRepository<T> where T : IDbRecord
         DbProvider = dbProvider;
     }
 
+    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await DbProvider.GetAsync(id, cancellationToken);
+    }
+    
     public async Task SaveAsync(T record, CancellationToken cancellationToken)
     {
         await DbProvider.SaveAsync(record, cancellationToken);
