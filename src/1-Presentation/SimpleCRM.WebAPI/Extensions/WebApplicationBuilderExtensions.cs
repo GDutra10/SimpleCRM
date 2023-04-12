@@ -36,7 +36,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddValidatorsFromAssemblyContaining<InsertUserRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<LoginRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<CustomerRegisterRQValidator>();
-
+        builder.Services.AddValidatorsFromAssemblyContaining<InteractionStartRQValidator>();
 
         builder.Services
             .AddControllers()
@@ -102,17 +102,21 @@ public static class WebApplicationBuilderExtensions
             // providers
             .AddScoped<IDbProvider<User>, MongoDbProvider<User>>()
             .AddScoped<IDbProvider<Customer>, MongoDbProvider<Customer>>()
+            .AddScoped<IDbProvider<Interaction>, MongoDbProvider<Interaction>>()
             // repositories
             .AddScoped<IRepository<User>, Repository<User>>()
             .AddScoped<IRepository<Customer>, Repository<Customer>>()
+            .AddScoped<IRepository<Interaction>, Repository<Interaction>>()
             // services
             .AddScoped<IUserService, UserService>()
             .AddScoped<IAuthenticationService, AuthenticationService>()
             .AddScoped<ICustomerService, CustomerService>()
+            .AddScoped<IInteractionService, InteractionService>()
             // managers
             .AddScoped<UserManager>()
             .AddScoped<TokenManager>()
-            .AddScoped<CustomerManager>();
+            .AddScoped<CustomerManager>()
+            .AddScoped<InteractionManager>();
 
         return builder;
     }

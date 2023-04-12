@@ -6,6 +6,7 @@ using SimpleCRM.Application.Attendant.Contracts.DTOs;
 
 namespace SimpleCRM.WebAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class CustomerController : AppBaseController
@@ -19,9 +20,7 @@ public class CustomerController : AppBaseController
         _customerService = customerService;
     }
 
-    
     [HttpPost]
-    [Authorize]
     [ProducesResponseType(typeof(CustomerRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ErrorRS), (int)HttpStatusCode.InternalServerError)]
@@ -31,8 +30,7 @@ public class CustomerController : AppBaseController
         
         return await _customerService.RegisterCustomerAsync(accessToken, customerRegisterRQ, cancellationToken);
     }
-
-    [Authorize]
+    
     [HttpGet("Search")]
     [ProducesResponseType(typeof(CustomerSearchRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]

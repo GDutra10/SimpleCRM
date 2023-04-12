@@ -1,10 +1,12 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 
 namespace SimpleCRM.WebAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase

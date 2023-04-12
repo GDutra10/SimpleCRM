@@ -28,5 +28,11 @@ public class MongoDbMapper : IDbMapper
         {
             classMap.AutoMap();
         });
+        
+        BsonClassMap.RegisterClassMap<Interaction>(classMap =>
+        {
+            classMap.AutoMap();
+            classMap.GetMemberMap(u => u.InteractionState).SetSerializer(new EnumSerializer<InteractionState>(BsonType.String));
+        });
     }
 }

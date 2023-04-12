@@ -8,14 +8,10 @@ using SimpleCRM.Domain.Managers;
 
 namespace SimpleCRM.Application.Attendant.Services;
 
-public class CustomerService : ICustomerService
+public class CustomerService : BaseService, ICustomerService
 {
-    private readonly ILogger<ICustomerService> _logger;
-    private readonly IMapper _mapper;
     private readonly IRepository<Customer> _customerRepository;
     private readonly CustomerManager _customerManager;
-    private readonly TokenManager _tokenManager;
-    private readonly UserManager _userManager;
 
     public CustomerService(
         ILogger<CustomerService> logger, 
@@ -23,20 +19,16 @@ public class CustomerService : ICustomerService
         IRepository<Customer> customerRepository,
         CustomerManager customerManager,
         TokenManager tokenManager, 
-        UserManager userManager)
+        UserManager userManager) 
+        : base(logger, mapper, tokenManager, userManager)
     {
-        _logger = logger;
-        _mapper = mapper;
         _customerRepository = customerRepository;
         _customerManager = customerManager;
-        _tokenManager = tokenManager;
-        _userManager = userManager;
     }
     
     public async Task<CustomerRS> RegisterCustomerAsync(string token, CustomerRegisterRQ customerRegisterRQ, CancellationToken cancellationToken)
     {
-        var userId = _tokenManager.GetId(token);
-        var user = await _userManager.GetUserAsync(userId, cancellationToken);
+        var user = await GetUserByToken(token, cancellationToken);
         var customer = await _customerManager.CreateCustomerAsync(
             customerRegisterRQ.Name ?? string.Empty, 
             customerRegisterRQ.Email ?? string.Empty,
@@ -46,7 +38,7 @@ public class CustomerService : ICustomerService
 
         await _customerRepository.SaveAsync(customer, cancellationToken);
 
-        return _mapper.Map<Customer, CustomerRS>(customer);
+        return Mapper.Map<Customer, CustomerRS>(customer);
     }
 
     // TODO: pagination
@@ -59,7 +51,7 @@ public class CustomerService : ICustomerService
             customerSearchRQ.Telephone ?? string.Empty,
             cancellationToken);
 
-        var list = _mapper.Map<List<Customer>, List<CustomerRS>>(customers);
+        var list = Mapper.Map<List<Customer>, List<CustomerRS>>(customers);
 
         return new CustomerSearchRS { Customers = list };
     }
