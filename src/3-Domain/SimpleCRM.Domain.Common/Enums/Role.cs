@@ -2,7 +2,8 @@
 
 public enum Role
 {
-    Admin,
-    Attendant,
-    BackOffice
+    Disable = 0,
+    Admin = 1,
+    Attendant = 2,
+    BackOffice = 3
 }
