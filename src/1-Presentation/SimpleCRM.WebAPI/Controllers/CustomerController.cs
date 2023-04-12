@@ -29,7 +29,18 @@ public class CustomerController : AppBaseController
     {
         var accessToken = this.GetAccessTokenFromHeader();
         
-        return await _customerService.CustomerRegisterAsync(accessToken, customerRegisterRQ, cancellationToken);
+        return await _customerService.RegisterCustomerAsync(accessToken, customerRegisterRQ, cancellationToken);
+    }
+
+    [Authorize]
+    [HttpGet("Search")]
+    [ProducesResponseType(typeof(CustomerSearchRS), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(ErrorRS), (int)HttpStatusCode.InternalServerError)]
+    public async Task<CustomerSearchRS> CustomerSearchAsync([FromQuery]CustomerSearchRQ customerSearchRQ, CancellationToken cancellationToken)
+    {
+        return await _customerService.SearchCustomerAsync(customerSearchRQ, cancellationToken);
     }
     
 }

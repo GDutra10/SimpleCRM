@@ -4,5 +4,6 @@ namespace SimpleCRM.Application.Attendant.Contracts;
 
 public interface ICustomerService
 {
-    Task<CustomerRS> CustomerRegisterAsync(string accessToken, CustomerRegisterRQ customerRegisterRQ, CancellationToken cancellationToken);
+    Task<CustomerRS> RegisterCustomerAsync(string accessToken, CustomerRegisterRQ customerRegisterRQ, CancellationToken cancellationToken);
+    Task<CustomerSearchRS> SearchCustomerAsync(CustomerSearchRQ customerSearchRQ, CancellationToken cancellationToken);
 }

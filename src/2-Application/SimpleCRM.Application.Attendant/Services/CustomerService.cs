@@ -33,7 +33,7 @@ public class CustomerService : ICustomerService
         _userManager = userManager;
     }
     
-    public async Task<CustomerRS> CustomerRegisterAsync(string token, CustomerRegisterRQ customerRegisterRQ, CancellationToken cancellationToken)
+    public async Task<CustomerRS> RegisterCustomerAsync(string token, CustomerRegisterRQ customerRegisterRQ, CancellationToken cancellationToken)
     {
         var userId = _tokenManager.GetId(token);
         var user = await _userManager.GetUserAsync(userId, cancellationToken);
@@ -47,5 +47,20 @@ public class CustomerService : ICustomerService
         await _customerRepository.SaveAsync(customer, cancellationToken);
 
         return _mapper.Map<Customer, CustomerRS>(customer);
+    }
+
+    // TODO: pagination
+    public async Task<CustomerSearchRS> SearchCustomerAsync(CustomerSearchRQ customerSearchRQ,
+        CancellationToken cancellationToken)
+    {
+        var customers = await _customerManager.SearchCustomerAsync(
+            customerSearchRQ.Name ?? string.Empty,
+            customerSearchRQ.Email ?? string.Empty,
+            customerSearchRQ.Telephone ?? string.Empty,
+            cancellationToken);
+
+        var list = _mapper.Map<List<Customer>, List<CustomerRS>>(customers);
+
+        return new CustomerSearchRS { Customers = list };
     }
 }
