@@ -11,7 +11,7 @@ public class Interaction : Record, IDbRecord
     public Guid CustomerId { get; private set; }
     public Customer Customer { get; private set; }
     
-    public DateTime EndDate { get; internal set; }
+    public DateTime EndTime { get; internal set; }
     
     public InteractionState InteractionState { get; internal set; }
     

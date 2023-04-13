@@ -26,7 +26,15 @@ public class InteractionController : AppBaseController
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     public async Task<InteractionRS> InteractionStartAsync([FromQuery]InteractionStartRQ interactionStartRQ, CancellationToken cancellationToken)
     {
-        return await _interactionService.InteractionStartAsync(this.GetAccessTokenFromHeader(), interactionStartRQ,
-            cancellationToken);
+        return await _interactionService.InteractionStartAsync(this.GetAccessTokenFromHeader(), interactionStartRQ, cancellationToken);
+    }
+
+    [HttpPut("Finish")]
+    [ProducesResponseType(typeof(InteractionRS), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+    public async Task<InteractionRS> InteractionFinishAsync(InteractionFinishRQ interactionFinishRQ, CancellationToken cancellationToken)
+    {
+        return await _interactionService.InteractionFinishAsync(this.GetAccessTokenFromHeader(), interactionFinishRQ, cancellationToken);
     }
 }

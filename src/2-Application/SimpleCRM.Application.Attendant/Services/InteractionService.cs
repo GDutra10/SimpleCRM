@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.ObjectModel;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
@@ -33,10 +34,21 @@ public class InteractionService : BaseService, IInteractionService
     {
         var user = await GetUserByToken(token, cancellationToken);
         var customer = await _customerRepository.GetAsync(interactionStartRQ.CustomerId, cancellationToken);
-        var interaction = await _interactionManager.CreateInteraction(user, customer, cancellationToken);
+        var interaction = await _interactionManager.CreateInteractionAsync(user, customer, cancellationToken);
         
         await _interactionRepository.SaveAsync(interaction, cancellationToken);
 
         return Mapper.Map<Interaction, InteractionRS>(interaction);
+    }
+
+    public async Task<InteractionRS> InteractionFinishAsync(string token, InteractionFinishRQ interactionFinishRQ, CancellationToken cancellationToken)
+    {
+        var user = await GetUserByToken(token, cancellationToken);
+        var interaction = await _interactionRepository.GetAsync(interactionFinishRQ.InteractionId, cancellationToken);
+
+        await _interactionManager.FinishInteractionAsync(interactionFinishRQ.State, interaction, user, cancellationToken);
+        await _interactionRepository.SaveAsync(interaction!, cancellationToken);
+
+        return Mapper.Map<Interaction, InteractionRS>(interaction!);
     }
 }

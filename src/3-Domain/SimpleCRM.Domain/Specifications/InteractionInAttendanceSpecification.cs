@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using SimpleCRM.Domain.Common.Enums;
 using SimpleCRM.Domain.Entities;
 
 namespace SimpleCRM.Domain.Specifications;
@@ -14,6 +15,6 @@ public class InteractionInAttendanceSpecification : ISpecification<Interaction>
 
     public Expression<Func<Interaction, bool>> ToExpression()
     {
-        return i => i.CustomerId == InteractionId;
+        return i => i.CustomerId == InteractionId && i.InteractionState == InteractionState.InAttendance;
     }
 }
