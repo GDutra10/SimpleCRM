@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
+using SimpleCRM.Application.Attendant.Contracts.Services;
 
 namespace SimpleCRM.WebAPI.Controllers;
 

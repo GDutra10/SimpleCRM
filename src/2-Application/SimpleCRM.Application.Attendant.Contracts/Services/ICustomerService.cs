@@ -1,6 +1,6 @@
 ﻿using SimpleCRM.Application.Attendant.Contracts.DTOs;
 
-namespace SimpleCRM.Application.Attendant.Contracts;
+namespace SimpleCRM.Application.Attendant.Contracts.Services;
 
 public interface ICustomerService
 {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
+using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Domain.Contracts.Repositories;
 using SimpleCRM.Domain.Entities;
 using SimpleCRM.Domain.Managers;

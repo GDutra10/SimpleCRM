@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using SimpleCRM.Application.Attendant.Contracts;
+using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Domain.Entities;
 using SimpleCRM.Domain.Managers;
 

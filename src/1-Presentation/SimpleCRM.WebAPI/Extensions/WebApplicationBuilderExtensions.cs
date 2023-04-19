@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
+using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Attendant.Profiles;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
