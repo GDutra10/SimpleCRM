@@ -28,10 +28,17 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\2-Application\SimpleCRM.Application.Admin.Contracts\SimpleCRM.Application.Admin.Contracts.csproj" />
+      <ProjectReference Include="..\..\2-Application\SimpleCRM.Application.Admin\SimpleCRM.Application.Admin.csproj" />
       <ProjectReference Include="..\..\2-Application\SimpleCRM.Application.Attendant.Contracts\SimpleCRM.Application.Attendant.Contracts.csproj" />
       <ProjectReference Include="..\..\2-Application\SimpleCRM.Application.Attendant\SimpleCRM.Application.Attendant.csproj" />
+      <ProjectReference Include="..\..\2-Application\SimpleCRM.Application.Common\SimpleCRM.Application.Common.csproj" />
       <ProjectReference Include="..\..\3-Domain\SimpleCRM.Domain.Common\SimpleCRM.Domain.Common.csproj" />
       <ProjectReference Include="..\..\4-Infra\SimpleCRM.Infra.MongoDB\SimpleCRM.Infra.MongoDB.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\Backoffice\" />
     </ItemGroup>
 
 </Project>

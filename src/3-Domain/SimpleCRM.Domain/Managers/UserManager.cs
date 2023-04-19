@@ -15,9 +15,10 @@ public class UserManager
         _userRepository = userRepository;
     }
     
-    public async Task<User> CreateUserAsync(string name, string email, string password, Role role, CancellationToken cancellationToken)
+    public async Task<User> CreateUserAsync(User userRequest, string name, string email, string password, Role role, CancellationToken cancellationToken)
     {
-        // TODO: validate if user can register new User
+        if (userRequest.Role != Role.Admin)
+            throw new BusinessException(string.Empty, $"The user '{userRequest.Name}' can't create new Users!");
         
         var users = await _userRepository.GetAllAsync(new UserWithEmailSpecification(email), cancellationToken);  
         

@@ -1,6 +1,6 @@
 ﻿using SimpleCRM.Domain.Common.Enums;
 
-namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
+namespace SimpleCRM.Application.Common.Contracts.DTOs;
 
 public class UserRS : BaseRS
 {

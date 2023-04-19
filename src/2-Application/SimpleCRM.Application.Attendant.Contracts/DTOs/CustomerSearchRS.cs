@@ -2,5 +2,5 @@
 
 public class CustomerSearchRS : BaseRS
 {
-    public List<CustomerRS> Customers { get; set; }
+    public List<CustomerRS>? Customers { get; set; }
 }

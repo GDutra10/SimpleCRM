@@ -1,4 +1,6 @@
-﻿namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
+﻿using SimpleCRM.Application.Common.Contracts.DTOs;
+
+namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
 
 public class CustomerRegisterRQ : BaseRQ
 {

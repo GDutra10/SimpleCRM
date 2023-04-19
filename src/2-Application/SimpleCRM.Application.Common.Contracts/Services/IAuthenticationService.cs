@@ -1,6 +1,6 @@
-﻿using SimpleCRM.Application.Attendant.Contracts.DTOs;
+﻿using SimpleCRM.Application.Common.Contracts.DTOs;
 
-namespace SimpleCRM.Application.Attendant.Contracts.Services;
+namespace SimpleCRM.Application.Common.Contracts.Services;
 
 public interface IAuthenticationService
 {

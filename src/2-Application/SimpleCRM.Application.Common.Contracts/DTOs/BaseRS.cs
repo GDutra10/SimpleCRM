@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
+namespace SimpleCRM.Application.Common.Contracts.DTOs;
 
 public class BaseRS
 {

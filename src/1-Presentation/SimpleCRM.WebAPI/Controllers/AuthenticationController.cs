@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
-using SimpleCRM.Application.Attendant.Contracts.Services;
+using SimpleCRM.Application.Common.Contracts.DTOs;
+using SimpleCRM.Application.Common.Contracts.Services;
 
 namespace SimpleCRM.WebAPI.Controllers;
 

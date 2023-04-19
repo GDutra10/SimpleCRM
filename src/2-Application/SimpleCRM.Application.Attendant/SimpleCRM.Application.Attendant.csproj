@@ -17,4 +17,8 @@
       <ProjectReference Include="..\SimpleCRM.Application.Attendant.Contracts\SimpleCRM.Application.Attendant.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Using Include="SimpleCRM.Application.Common.Contracts.DTOs" />
+    </ItemGroup>
+    
 </Project>

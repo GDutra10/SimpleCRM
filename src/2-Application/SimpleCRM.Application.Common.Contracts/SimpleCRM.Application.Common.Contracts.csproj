@@ -8,12 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\3-Domain\SimpleCRM.Domain.Common\SimpleCRM.Domain.Common.csproj" />
-      <ProjectReference Include="..\..\3-Domain\SimpleCRM.Domain\SimpleCRM.Domain.csproj" />
-      <ProjectReference Include="..\SimpleCRM.Application.Common.Contracts\SimpleCRM.Application.Common.Contracts.csproj" />
-    </ItemGroup>
-    
-    <ItemGroup>
-        <Using Include="SimpleCRM.Application.Common.Contracts.DTOs" />
     </ItemGroup>
 
 </Project>

@@ -1,15 +1,14 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
 
-namespace SimpleCRM.WebAPI.Controllers;
+namespace SimpleCRM.WebAPI.Controllers.Attendant;
 
 [Authorize]
 [ApiController]
-[Route("[controller]s")]
+[Route("attendant/[controller]s")]
 public class InteractionController : AppBaseController
 {
     private readonly ILogger<InteractionController> _logger;
@@ -21,6 +20,7 @@ public class InteractionController : AppBaseController
         _interactionService = interactionService;
     }
     
+    [Authorize]
     [HttpPost("Start")]
     [ProducesResponseType(typeof(InteractionRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
@@ -30,6 +30,7 @@ public class InteractionController : AppBaseController
         return await _interactionService.InteractionStartAsync(this.GetAccessTokenFromHeader(), interactionStartRQ, cancellationToken);
     }
 
+    [Authorize]
     [HttpPut("Finish")]
     [ProducesResponseType(typeof(InteractionRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]

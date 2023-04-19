@@ -1,6 +1,6 @@
 ﻿using SimpleCRM.Domain.Common.Enums;
 
-namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
+namespace SimpleCRM.Application.Admin.Contracts.DTOs;
 
 public class UserRegisterRQ : BaseRQ
 {

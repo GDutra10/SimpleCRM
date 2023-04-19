@@ -1,15 +1,17 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SimpleCRM.Application.Admin.Contracts.DTOs;
+using SimpleCRM.Application.Admin.Contracts.Services;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
-using SimpleCRM.Application.Attendant.Contracts.Services;
+using SimpleCRM.Application.Common.Contracts.DTOs;
 
-namespace SimpleCRM.WebAPI.Controllers;
+namespace SimpleCRM.WebAPI.Controllers.Admin;
 
 [Authorize]
 [ApiController]
-[Route("[controller]s")]
-public class UserController : ControllerBase
+[Route("admin/[controller]s")]
+public class UserController : AppBaseController
 {
     private readonly ILogger<UserController> _logger;
     private readonly IUserService _userService;
@@ -21,11 +23,13 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(typeof(UserRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ErrorRS), (int)HttpStatusCode.InternalServerError)]
     public async Task<UserRS> UserRegisterAsync(UserRegisterRQ userRegisterRQ, CancellationToken cancellationToken)
     {
-        return await _userService.UserRegisterAsync(userRegisterRQ, cancellationToken);
+        var accessToken = this.GetAccessTokenFromHeader();
+        return await _userService.UserRegisterAsync(accessToken, userRegisterRQ, cancellationToken);
     }
 }

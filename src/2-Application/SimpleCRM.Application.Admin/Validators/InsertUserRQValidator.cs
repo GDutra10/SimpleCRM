@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SimpleCRM.Application.Attendant.Contracts.DTOs;
+using SimpleCRM.Application.Admin.Contracts.DTOs;
 
-namespace SimpleCRM.Application.Attendant.Validators;
+namespace SimpleCRM.Application.Admin.Validators;
 
 public class InsertUserRQValidator: AbstractValidator<UserRegisterRQ>
 {

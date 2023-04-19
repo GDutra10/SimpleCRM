@@ -1,20 +1,24 @@
-﻿using System.Net;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using SimpleCRM.Application.Attendant.Contracts;
+using SimpleCRM.Application.Admin.Contracts.Services;
+using SimpleCRM.Application.Admin.Profiles;
+using SimpleCRM.Application.Admin.Services;
+using SimpleCRM.Application.Admin.Validators;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Attendant.Profiles;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
+using SimpleCRM.Application.Common.Validators;
 using SimpleCRM.Domain.Contracts.Repositories;
 using SimpleCRM.Domain.Entities;
 using SimpleCRM.Domain.Managers;
@@ -34,7 +38,9 @@ public static class WebApplicationBuilderExtensions
             fluentValidation.DisableDataAnnotationsValidation = true;
         });
 
+        // admin
         builder.Services.AddValidatorsFromAssemblyContaining<InsertUserRQValidator>();
+        // attendant
         builder.Services.AddValidatorsFromAssemblyContaining<LoginRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<CustomerRegisterRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<InteractionStartRQValidator>();

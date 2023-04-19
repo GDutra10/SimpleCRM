@@ -5,11 +5,11 @@ using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
 
-namespace SimpleCRM.WebAPI.Controllers;
+namespace SimpleCRM.WebAPI.Controllers.Attendant;
 
 [Authorize]
 [ApiController]
-[Route("[controller]s")]
+[Route("attendant/[controller]s")]
 public class CustomerController : AppBaseController
 {
     private readonly ILogger<CustomerController> _logger;
@@ -22,6 +22,7 @@ public class CustomerController : AppBaseController
     }
 
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(typeof(CustomerRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ErrorRS), (int)HttpStatusCode.InternalServerError)]
@@ -33,6 +34,7 @@ public class CustomerController : AppBaseController
     }
     
     [HttpGet]
+    [Authorize]
     [ProducesResponseType(typeof(CustomerSearchRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
