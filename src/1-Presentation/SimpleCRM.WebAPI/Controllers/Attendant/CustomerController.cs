@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
+using SimpleCRM.WebAPI.ActionFilters;
 
 namespace SimpleCRM.WebAPI.Controllers.Attendant;
 
@@ -35,6 +36,7 @@ public class CustomerController : AppBaseController
     
     [HttpGet]
     [Authorize]
+    [ServiceFilter(typeof(SearchFilterActionFilter), Order = 1)]
     [ProducesResponseType(typeof(CustomerSearchRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]

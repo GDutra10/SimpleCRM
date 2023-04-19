@@ -35,9 +35,26 @@ public class MongoDbProvider<T> : IDbProvider<T> where T : IDbRecord
         await _collection.ReplaceOneAsync(filter, record, new ReplaceOptions() { IsUpsert = true }, cancellationToken);
     }
 
+    public async Task<long> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken)
+    {
+        return await _collection.CountDocumentsAsync(specification.ToExpression(),
+            cancellationToken: cancellationToken);
+    }
+    
     public async Task<List<T>> GetAllAsync(ISpecification<T> specification, CancellationToken cancellationToken)
     {
         var result = await _collection.FindAsync(specification.ToExpression(), cancellationToken:cancellationToken);
+        
+        return result.ToList();
+    }
+    
+    public async Task<List<T>> GetAllAsync(ISpecification<T> specification, int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        var result = await _collection
+            .FindAsync(
+                specification.ToExpression(),
+                new FindOptions<T>() { Skip = pageNumber * pageSize, Limit = pageSize },
+                cancellationToken:cancellationToken);
         
         return result.ToList();
     }

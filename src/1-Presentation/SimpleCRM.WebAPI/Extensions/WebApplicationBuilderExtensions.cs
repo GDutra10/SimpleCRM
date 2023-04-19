@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +17,8 @@ using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Attendant.Profiles;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
+using SimpleCRM.Application.Common.Contracts.Services;
+using SimpleCRM.Application.Common.Services;
 using SimpleCRM.Application.Common.Validators;
 using SimpleCRM.Domain.Contracts.Repositories;
 using SimpleCRM.Domain.Entities;
@@ -25,6 +26,7 @@ using SimpleCRM.Domain.Managers;
 using SimpleCRM.Domain.Providers;
 using SimpleCRM.Infra;
 using SimpleCRM.Infra.MongoDB;
+using SimpleCRM.WebAPI.ActionFilters;
 using SimpleCRM.WebAPI.Handlers;
 
 namespace SimpleCRM.WebAPI.Extensions;
@@ -104,6 +106,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddSimpleCRMDependencyInjections(this WebApplicationBuilder builder)
     {
         builder.Services
+            .AddScoped<SearchFilterActionFilter>()
             .AddSingleton<ExceptionHandler>()
             .AddSingleton<IDbMapper, MongoDbMapper>()
             // providers

@@ -26,4 +26,10 @@ public class Repository<T> : IRepository<T> where T : IDbRecord
 
     public async Task<List<T>> GetAllAsync(ISpecification<T> specification, CancellationToken cancellationToken) 
         => await DbProvider.GetAllAsync(specification, cancellationToken);
+    
+    public async Task<long> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken) 
+        => await DbProvider.CountAsync(specification, cancellationToken);
+    
+    public async Task<List<T>> GetAllAsync(ISpecification<T> specification, int pageNumber, int pageSize, CancellationToken cancellationToken) 
+        => await DbProvider.GetAllAsync(specification, pageNumber > 0 ? pageNumber - 1 : pageNumber, pageSize, cancellationToken);
 }

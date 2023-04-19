@@ -18,10 +18,10 @@ public class CustomerManager
         return await Task.FromResult(new Customer(name, email, telephone, userId));
     }
 
-    public async Task<List<Customer>> SearchCustomerAsync(string name, string email, string telephone, CancellationToken cancellationToken)
+    public async Task<List<Customer>> SearchCustomerAsync(string name, string email, string telephone, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         var customerSearchSpecification = new CustomerSearchSpecification(name, email, telephone);
         
-        return await _customerRepository.GetAllAsync(customerSearchSpecification, cancellationToken);
+        return await _customerRepository.GetAllAsync(customerSearchSpecification, pageNumber, pageSize, cancellationToken);
     }
 }

@@ -6,6 +6,7 @@ using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Domain.Contracts.Repositories;
 using SimpleCRM.Domain.Entities;
 using SimpleCRM.Domain.Managers;
+using SimpleCRM.Domain.Specifications;
 
 namespace SimpleCRM.Application.Attendant.Services;
 
@@ -46,14 +47,27 @@ public class CustomerService : BaseService, ICustomerService
     public async Task<CustomerSearchRS> SearchCustomerAsync(CustomerSearchRQ customerSearchRQ,
         CancellationToken cancellationToken)
     {
+        var name = customerSearchRQ.Name ?? string.Empty;
+        var email = customerSearchRQ.Email ?? string.Empty;
+        var telephone = customerSearchRQ.Telephone ?? string.Empty;
         var customers = await _customerManager.SearchCustomerAsync(
-            customerSearchRQ.Name ?? string.Empty,
-            customerSearchRQ.Email ?? string.Empty,
-            customerSearchRQ.Telephone ?? string.Empty,
-            cancellationToken);
-
+            name, email, telephone, customerSearchRQ.PageNumber, customerSearchRQ.PageSize, cancellationToken);
+        var customerSearchSpecification = new CustomerSearchSpecification(name, email, telephone);
+        var totalRecord = await _customerRepository.CountAsync(customerSearchSpecification, cancellationToken);
+        var hasData = totalRecord > 0;
         var list = Mapper.Map<List<Customer>, List<CustomerRS>>(customers);
+        var totalPages = hasData ? Math.Ceiling((double)totalRecord / (double)customerSearchRQ.PageSize) : 0;
 
-        return new CustomerSearchRS { Customers = list };
+        if (totalPages == 0)
+            totalPages++;
+        
+        return new CustomerSearchRS
+        {
+            Records = list,
+            PageSize = customerSearchRQ.PageSize,
+            CurrentPage = customerSearchRQ.PageNumber,
+            TotalPages = (int)totalPages,
+            TotalRecords = totalRecord
+        };
     }
 }
