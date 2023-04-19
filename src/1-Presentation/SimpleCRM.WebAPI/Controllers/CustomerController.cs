@@ -8,7 +8,7 @@ namespace SimpleCRM.WebAPI.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]s")]
 public class CustomerController : AppBaseController
 {
     private readonly ILogger<CustomerController> _logger;
@@ -31,7 +31,7 @@ public class CustomerController : AppBaseController
         return await _customerService.RegisterCustomerAsync(accessToken, customerRegisterRQ, cancellationToken);
     }
     
-    [HttpGet("Search")]
+    [HttpGet]
     [ProducesResponseType(typeof(CustomerSearchRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]

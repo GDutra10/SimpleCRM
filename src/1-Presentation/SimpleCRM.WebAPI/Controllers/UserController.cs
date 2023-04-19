@@ -8,7 +8,7 @@ namespace SimpleCRM.WebAPI.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]s")]
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
