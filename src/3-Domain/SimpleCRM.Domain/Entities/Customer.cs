@@ -1,4 +1,5 @@
-﻿using SimpleCRM.Domain.Contracts;
+﻿using SimpleCRM.Domain.Common.Enums;
+using SimpleCRM.Domain.Contracts;
 
 namespace SimpleCRM.Domain.Entities;
 
@@ -8,6 +9,7 @@ public class Customer : Record, IDbRecord
     public string Email { get; internal set; } = default!;
     public string Telephone { get; internal set; } = default!;
     public Guid UserId { get; internal set; }
+    public InteractionState? State { get; internal set; }
     
     private Customer(){ }
 
@@ -17,5 +19,6 @@ public class Customer : Record, IDbRecord
         this.Email = email;
         this.Telephone = telephone;
         this.UserId = userId;
+        this.State = null;
     }
 }

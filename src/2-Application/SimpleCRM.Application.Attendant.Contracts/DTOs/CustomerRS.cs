@@ -1,4 +1,6 @@
-﻿namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
+﻿using SimpleCRM.Domain.Common.Enums;
+
+namespace SimpleCRM.Application.Attendant.Contracts.DTOs;
 
 public class CustomerRS : BaseRS
 {
@@ -7,4 +9,5 @@ public class CustomerRS : BaseRS
     public string Name { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string Telephone { get; set; } = default!;
+    public InteractionState? State { get; set; } = default!;
 }

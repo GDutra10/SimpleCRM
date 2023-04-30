@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using SimpleCRM.Domain.Entities;
+using SimpleCRM.Domain.Managers;
 
 namespace SimpleCRM.Domain.Specifications;
 
@@ -21,6 +22,8 @@ public class CustomerSearchSpecification : ISpecification<Customer>
         return c =>
             c.Name.Contains(_name) &&
             c.Email.Contains(_email) &&
-            c.Telephone.Contains(_telephone);
+            c.Telephone.Contains(_telephone) &&
+            InteractionManager.AvailableStatus.Contains(c.State);
     }
+
 }

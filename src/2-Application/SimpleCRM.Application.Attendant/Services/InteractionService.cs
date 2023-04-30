@@ -46,8 +46,10 @@ public class InteractionService : BaseService, IInteractionService
     {
         var user = await GetUserByToken(token, cancellationToken);
         var interaction = await _interactionRepository.GetAsync(interactionFinishRQ.InteractionId, cancellationToken);
-
-        await _interactionManager.FinishInteractionAsync(interactionFinishRQ.State, interaction, user, cancellationToken);
+        var customer = await _customerRepository.GetAsync(interaction?.CustomerId ?? Guid.Empty, cancellationToken);
+        
+        await _interactionManager.FinishInteractionAsync(interactionFinishRQ.State, interaction, customer, user, cancellationToken);
+        await _customerRepository.SaveAsync(customer!, cancellationToken);
         await _interactionRepository.SaveAsync(interaction!, cancellationToken);
 
         return Mapper.Map<Interaction, InteractionRS>(interaction!);
