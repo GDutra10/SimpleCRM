@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\3-Domain\SimpleCRM.Domain.Common\SimpleCRM.Domain.Common.csproj" />
+      <ProjectReference Include="..\..\3-Domain\SimpleCRM.Domain\SimpleCRM.Domain.csproj" />
     </ItemGroup>
 
 </Project>

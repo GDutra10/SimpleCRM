@@ -3,7 +3,7 @@ using SimpleCRM.Application.Admin.Contracts.DTOs;
 
 namespace SimpleCRM.Application.Admin.Validators;
 
-public class InsertUserRQValidator: AbstractValidator<UserRegisterRQ>
+public class InsertUserRQValidator : AbstractValidator<UserRegisterRQ>
 {
     public InsertUserRQValidator()
     {

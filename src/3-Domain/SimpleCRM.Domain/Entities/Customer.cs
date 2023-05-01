@@ -9,6 +9,7 @@ public class Customer : Record, IDbRecord
     public string Email { get; internal set; } = default!;
     public string Telephone { get; internal set; } = default!;
     public Guid UserId { get; internal set; }
+    public User User { get; internal set; }
     public InteractionState? State { get; internal set; }
     
     private Customer(){ }

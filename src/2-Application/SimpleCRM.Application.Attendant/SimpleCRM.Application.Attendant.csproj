@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\3-Domain\SimpleCRM.Domain\SimpleCRM.Domain.csproj" />
       <ProjectReference Include="..\SimpleCRM.Application.Attendant.Contracts\SimpleCRM.Application.Attendant.Contracts.csproj" />
+      <ProjectReference Include="..\SimpleCRM.Application.Common\SimpleCRM.Application.Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>

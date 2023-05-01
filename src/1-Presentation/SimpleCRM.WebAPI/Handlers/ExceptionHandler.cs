@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
+using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.Domain.Common.System.Exceptions;
 
 namespace SimpleCRM.WebAPI.Handlers;

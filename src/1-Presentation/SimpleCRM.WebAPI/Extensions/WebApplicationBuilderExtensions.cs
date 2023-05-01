@@ -9,7 +9,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using SimpleCRM.Application.Admin.Contracts.Services;
-using SimpleCRM.Application.Admin.Profiles;
 using SimpleCRM.Application.Admin.Services;
 using SimpleCRM.Application.Admin.Validators;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
@@ -17,7 +16,9 @@ using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Attendant.Profiles;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
+using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.Application.Common.Contracts.Services;
+using SimpleCRM.Application.Common.Profiles;
 using SimpleCRM.Application.Common.Services;
 using SimpleCRM.Application.Common.Validators;
 using SimpleCRM.Domain.Contracts.Repositories;
@@ -28,6 +29,7 @@ using SimpleCRM.Infra;
 using SimpleCRM.Infra.MongoDB;
 using SimpleCRM.WebAPI.ActionFilters;
 using SimpleCRM.WebAPI.Handlers;
+using UserProfile = SimpleCRM.Application.Admin.Profiles.UserProfile;
 
 namespace SimpleCRM.WebAPI.Extensions;
 
@@ -40,10 +42,13 @@ public static class WebApplicationBuilderExtensions
             fluentValidation.DisableDataAnnotationsValidation = true;
         });
 
+        // common
+        builder.Services.AddValidatorsFromAssemblyContaining<LoginRQValidator>();
         // admin
         builder.Services.AddValidatorsFromAssemblyContaining<InsertUserRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<ProductRegisterRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<ProductUpdateRQValidator>();
         // attendant
-        builder.Services.AddValidatorsFromAssemblyContaining<LoginRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<CustomerRegisterRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<InteractionStartRQValidator>();
 
@@ -99,6 +104,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddAutoMapper(typeof(UserProfile));
         builder.Services.AddAutoMapper(typeof(CustomerProfile));
+        builder.Services.AddAutoMapper(typeof(ProductProfile));
 
         return builder;
     }
@@ -113,20 +119,30 @@ public static class WebApplicationBuilderExtensions
             .AddScoped<IDbProvider<User>, MongoDbProvider<User>>()
             .AddScoped<IDbProvider<Customer>, MongoDbProvider<Customer>>()
             .AddScoped<IDbProvider<Interaction>, MongoDbProvider<Interaction>>()
+            .AddScoped<IDbProvider<Product>, MongoDbProvider<Product>>()
+            .AddScoped<IDbProvider<Order>, MongoDbProvider<Order>>()
+            .AddScoped<IDbProvider<OrderItem>, MongoDbProvider<OrderItem>>()
             // repositories
             .AddScoped<IRepository<User>, Repository<User>>()
             .AddScoped<IRepository<Customer>, Repository<Customer>>()
             .AddScoped<IRepository<Interaction>, Repository<Interaction>>()
+            .AddScoped<IRepository<Product>, Repository<Product>>()
+            .AddScoped<IRepository<Order>, Repository<Order>>()
+            .AddScoped<IRepository<OrderItem>, Repository<OrderItem>>()
             // services
             .AddScoped<IUserService, UserService>()
             .AddScoped<IAuthenticationService, AuthenticationService>()
             .AddScoped<ICustomerService, CustomerService>()
             .AddScoped<IInteractionService, InteractionService>()
+            .AddScoped<IAdminProductService, AdminProductService>()
+            .AddScoped<IProductBaseService, ProductBaseService>()
             // managers
             .AddScoped<UserManager>()
             .AddScoped<TokenManager>()
             .AddScoped<CustomerManager>()
-            .AddScoped<InteractionManager>();
+            .AddScoped<InteractionManager>()
+            .AddScoped<ProductManager>()
+            .AddScoped<OrderManager>();
 
         return builder;
     }

@@ -10,7 +10,7 @@ namespace SimpleCRM.WebAPI.Controllers.Admin;
 
 [Authorize]
 [ApiController]
-[Route("admin/[controller]s")]
+[Route("Admin/[controller]s")]
 public class UserController : AppBaseController
 {
     private readonly ILogger<UserController> _logger;

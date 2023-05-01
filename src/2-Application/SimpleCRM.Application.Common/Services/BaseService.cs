@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
-using SimpleCRM.Application.Attendant.Contracts;
-using SimpleCRM.Application.Attendant.Contracts.Services;
+using SimpleCRM.Application.Common.Contracts.Services;
 using SimpleCRM.Domain.Entities;
 using SimpleCRM.Domain.Managers;
 
-namespace SimpleCRM.Application.Attendant.Services;
+namespace SimpleCRM.Application.Common.Services;
 
 public abstract class BaseService : IBaseService
 {

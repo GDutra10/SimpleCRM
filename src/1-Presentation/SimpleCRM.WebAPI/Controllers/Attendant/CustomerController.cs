@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
+using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.WebAPI.ActionFilters;
 
 namespace SimpleCRM.WebAPI.Controllers.Attendant;
 
 [Authorize]
 [ApiController]
-[Route("attendant/[controller]s")]
+[Route("Attendant/[controller]s")]
 public class CustomerController : AppBaseController
 {
     private readonly ILogger<CustomerController> _logger;

@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
+using SimpleCRM.Application.Common.Contracts.DTOs;
 
 namespace SimpleCRM.WebAPI.Controllers.Attendant;
 
 [Authorize]
 [ApiController]
-[Route("attendant/[controller]s")]
+[Route("Attendant/[controller]s")]
 public class InteractionController : AppBaseController
 {
     private readonly ILogger<InteractionController> _logger;

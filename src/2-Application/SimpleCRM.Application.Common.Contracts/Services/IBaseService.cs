@@ -1,6 +1,6 @@
 ﻿using SimpleCRM.Domain.Entities;
 
-namespace SimpleCRM.Application.Attendant.Contracts.Services;
+namespace SimpleCRM.Application.Common.Contracts.Services;
 
 public interface IBaseService
 {
