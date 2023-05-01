@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using SimpleCRM.Application.Attendant.Contracts.DTOs;
+using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.Domain.Entities;
 
-namespace SimpleCRM.Application.Attendant.Profiles;
+namespace SimpleCRM.Application.Common.Profiles;
 
 public class InteractionProfile : Profile
 {

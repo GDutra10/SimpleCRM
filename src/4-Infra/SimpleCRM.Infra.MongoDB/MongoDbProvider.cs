@@ -17,14 +17,6 @@ public class MongoDbProvider<T> : IDbProvider<T> where T : IDbRecord
         _collection = client.GetDatabase(ProviderConstants.DataBase).GetCollection<T>(typeof(T).Name);
     }
 
-    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var filter = Builders<T>.Filter.Eq("_id", id);
-        var result = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
-        
-        return result.FirstOrDefault(cancellationToken);
-    }
-
     public async Task SaveAsync(T record, CancellationToken cancellationToken)
     {
         if (record.Id == Guid.Empty)
@@ -34,13 +26,20 @@ public class MongoDbProvider<T> : IDbProvider<T> where T : IDbRecord
         var filter = Builders<T>.Filter.Eq("_id", record.Id);
         await _collection.ReplaceOneAsync(filter, record, new ReplaceOptions() { IsUpsert = true }, cancellationToken);
     }
-
-    public async Task<long> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken)
-    {
-        return await _collection.CountDocumentsAsync(specification.ToExpression(),
-            cancellationToken: cancellationToken);
-    }
     
+    public async Task DeleteAsync(T record, CancellationToken cancellationToken)
+    {
+        await _collection.FindOneAndDeleteAsync(t => t.Id == record.Id, cancellationToken: cancellationToken);
+    }
+
+    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var filter = Builders<T>.Filter.Eq("_id", id);
+        var result = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
+        
+        return result.FirstOrDefault(cancellationToken);
+    }
+
     public async Task<List<T>> GetAllAsync(ISpecification<T> specification, CancellationToken cancellationToken)
     {
         var result = await _collection.FindAsync(specification.ToExpression(), cancellationToken:cancellationToken);
@@ -57,5 +56,11 @@ public class MongoDbProvider<T> : IDbProvider<T> where T : IDbRecord
                 cancellationToken:cancellationToken);
         
         return result.ToList();
+    }
+    
+    public async Task<long> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken)
+    {
+        return await _collection.CountDocumentsAsync(specification.ToExpression(),
+            cancellationToken: cancellationToken);
     }
 }

@@ -21,5 +21,9 @@
     <ItemGroup>
         <Using Include="SimpleCRM.Application.Common.Contracts.DTOs" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Profiles\" />
+    </ItemGroup>
     
 </Project>

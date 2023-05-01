@@ -16,6 +16,9 @@ public class InteractionService : BaseService, IInteractionService
     private readonly InteractionManager _interactionManager;
     private readonly IRepository<Interaction> _interactionRepository;
     private readonly IRepository<Customer> _customerRepository;
+    private readonly OrderManager _orderManager;
+    private readonly IRepository<Product> _productRepository;
+    private readonly IRepository<OrderItem> _orderItemRepository;
 
     public InteractionService(
         ILogger<InteractionService> logger, 
@@ -24,12 +27,18 @@ public class InteractionService : BaseService, IInteractionService
         UserManager userManager,
         IRepository<Customer> customerRepository,
         IRepository<Interaction> interactionRepository,
-        InteractionManager interactionManager) 
+        IRepository<Product> productRepository,
+        IRepository<OrderItem> orderItemRepository,
+        InteractionManager interactionManager,
+        OrderManager orderManager) 
         : base(logger, mapper, tokenManager, userManager)
     {
         _customerRepository = customerRepository;
         _interactionRepository = interactionRepository;
+        _productRepository = productRepository;
         _interactionManager = interactionManager;
+        _orderManager = orderManager;
+        _orderItemRepository = orderItemRepository;
     }
     
     public async Task<InteractionRS> InteractionStartAsync(string token, InteractionStartRQ interactionStartRQ, CancellationToken cancellationToken)
@@ -41,6 +50,26 @@ public class InteractionService : BaseService, IInteractionService
         await _interactionRepository.SaveAsync(interaction, cancellationToken);
 
         return Mapper.Map<Interaction, InteractionRS>(interaction);
+    }
+
+    public async Task<OrderRS> AddOrderItem(string token, OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken)
+    {
+        var user = await GetUserByToken(token, cancellationToken);
+        var interaction = await _interactionRepository.GetAsync(orderItemAddRQ.InteractionId, cancellationToken);
+        var product = await _productRepository.GetAsync(orderItemAddRQ.ProductId, cancellationToken);
+        var order = await _orderManager.AddOrderItemAsync(user, interaction, product, cancellationToken);
+
+        return Mapper.Map<Order, OrderRS>(order);
+    }
+
+    public async Task<OrderRS> DeleteOrderItem(string token, OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken)
+    {
+        var user = await GetUserByToken(token, cancellationToken);
+        var interaction = await _interactionRepository.GetAsync(orderItemDeleteRQ.InteractionId, cancellationToken);
+        var orderItem = await _orderItemRepository.GetAsync(orderItemDeleteRQ.OrderItemId, cancellationToken);
+        var order = await _orderManager.DeleteOrderItemAsync(user, interaction, orderItem, cancellationToken);
+
+        return Mapper.Map<Order, OrderRS>(order);
     }
 
     public async Task<InteractionRS> InteractionFinishAsync(string token, InteractionFinishRQ interactionFinishRQ, CancellationToken cancellationToken)

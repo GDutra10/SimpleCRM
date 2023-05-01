@@ -6,10 +6,13 @@ namespace SimpleCRM.Domain.Entities;
 
 public class Interaction : Record, IDbRecord
 {
-    public Guid UserId { get; private set; }
-    public User User { get; private set; } = null!;
-    public Guid CustomerId { get; private set; }
-    public Customer Customer { get; private set; } = null!;
+    public Guid UserId { get; internal set; }
+    public User User { get; internal set; } = default!;
+    public Guid CustomerId { get; internal set; }
+    public Customer Customer { get; internal set; } = default!;
+
+    public Guid? OrderId { get; internal set; } = null;
+    public Order? Order { get; internal set; } = null;
 
     public DateTime EndTime { get; internal set; }
     

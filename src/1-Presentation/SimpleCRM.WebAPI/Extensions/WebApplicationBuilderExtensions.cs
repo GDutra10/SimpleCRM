@@ -11,9 +11,7 @@ using Serilog;
 using SimpleCRM.Application.Admin.Contracts.Services;
 using SimpleCRM.Application.Admin.Services;
 using SimpleCRM.Application.Admin.Validators;
-using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
-using SimpleCRM.Application.Attendant.Profiles;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
 using SimpleCRM.Application.Common.Contracts.DTOs;
@@ -51,6 +49,8 @@ public static class WebApplicationBuilderExtensions
         // attendant
         builder.Services.AddValidatorsFromAssemblyContaining<CustomerRegisterRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<InteractionStartRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<OrderItemAddRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<OrderItemDeleteRQValidator>();
 
         builder.Services
             .AddControllers()
@@ -105,6 +105,8 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddAutoMapper(typeof(UserProfile));
         builder.Services.AddAutoMapper(typeof(CustomerProfile));
         builder.Services.AddAutoMapper(typeof(ProductProfile));
+        builder.Services.AddAutoMapper(typeof(OrderProfile));
+        builder.Services.AddAutoMapper(typeof(OrderItemProfile));
 
         return builder;
     }
@@ -130,8 +132,8 @@ public static class WebApplicationBuilderExtensions
             .AddScoped<IRepository<Order>, Repository<Order>>()
             .AddScoped<IRepository<OrderItem>, Repository<OrderItem>>()
             // services
-            .AddScoped<IUserService, UserService>()
             .AddScoped<IAuthenticationService, AuthenticationService>()
+            .AddScoped<IUserService, UserService>()
             .AddScoped<ICustomerService, CustomerService>()
             .AddScoped<IInteractionService, InteractionService>()
             .AddScoped<IAdminProductService, AdminProductService>()
