@@ -27,6 +27,7 @@ public class MongoDbMapper : IDbMapper
         BsonClassMap.RegisterClassMap<Customer>(classMap =>
         {
             classMap.AutoMap();
+            classMap.GetMemberMap(c => c.State).SetSerializer(new EnumSerializer<InteractionState>(BsonType.String));
         });
         
         BsonClassMap.RegisterClassMap<Interaction>(classMap =>
