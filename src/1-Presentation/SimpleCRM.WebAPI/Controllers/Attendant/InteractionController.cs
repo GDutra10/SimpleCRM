@@ -40,4 +40,24 @@ public class InteractionController : AppBaseController
     {
         return await _interactionService.InteractionFinishAsync(this.GetAccessTokenFromHeader(), interactionFinishRQ, cancellationToken);
     }
+
+    [Authorize]
+    [HttpPost("Order")]
+    [ProducesResponseType(typeof(OrderRS), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+    public async Task<OrderRS> AddOrderItemAsync(OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken)
+    {
+        return await _interactionService.AddOrderItem(this.GetAccessTokenFromHeader(), orderItemAddRQ, cancellationToken);
+    }
+
+    [Authorize]
+    [HttpDelete("Order")]
+    [ProducesResponseType(typeof(OrderRS), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+    public async Task<OrderRS> DeleteOrderItemAsync(OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken)
+    {
+        return await _interactionService.DeleteOrderItem(this.GetAccessTokenFromHeader(), orderItemDeleteRQ, cancellationToken);
+    }
 }

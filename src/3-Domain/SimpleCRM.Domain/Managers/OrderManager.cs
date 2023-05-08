@@ -48,10 +48,14 @@ public class OrderManager
         
         var order = await GetOrCreateOrderAsync(interaction, cancellationToken);
         var orderItem = new OrderItem(order.Id, product);
-        order.OrderItems.Add(orderItem);
-
+        
         await _orderItemRepository.SaveAsync(orderItem, cancellationToken);
+        
+        order.OrderItems.Add(orderItem);
+        interaction!.Order = order;
+        
         await _orderRepository.SaveAsync(order, cancellationToken);
+        await _interactionRepository.SaveAsync(interaction, cancellationToken);
 
         return order;
     }
@@ -64,9 +68,11 @@ public class OrderManager
             throw new BusinessException("It is not possible to remove an Order Item with invalid Order Item!");
 
         var order = (await _orderRepository.GetAsync(orderItem.OrderId, cancellationToken))!;
-        order.OrderItems.Remove(orderItem);
+        order.OrderItems.Remove(order.OrderItems.First(oi => oi.Id == orderItem.Id));
+        interaction!.Order = order;
         
-        await _orderItemRepository.DeleteAsync(orderItem, cancellationToken);
+        await _interactionRepository.SaveAsync(interaction, cancellationToken);
+        await _orderItemRepository.SaveAsync(orderItem, cancellationToken);
         await _orderRepository.SaveAsync(order, cancellationToken);
         
         return order;

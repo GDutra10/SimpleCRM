@@ -2,6 +2,7 @@
 
 public enum InteractionState
 {
+    None,
     InAttendance,
     NotAvailable,
     NotInterested,

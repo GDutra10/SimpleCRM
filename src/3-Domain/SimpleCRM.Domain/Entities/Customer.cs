@@ -10,7 +10,7 @@ public class Customer : Record, IDbRecord
     public string Telephone { get; internal set; } = default!;
     public Guid UserId { get; internal set; }
     public User User { get; internal set; }
-    public InteractionState? State { get; internal set; }
+    public InteractionState State { get; internal set; }
     
     private Customer(){ }
 
@@ -20,6 +20,6 @@ public class Customer : Record, IDbRecord
         this.Email = email;
         this.Telephone = telephone;
         this.UserId = userId;
-        this.State = null;
+        this.State = InteractionState.None;
     }
 }

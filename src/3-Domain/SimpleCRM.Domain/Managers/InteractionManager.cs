@@ -70,6 +70,7 @@ public class InteractionManager
             throw new BusinessException($"It is not possible to end an interaction with state 'Pre Sale' without Order Items!");
         
         await DeleteOrderAndOrderItemWhenIsNotPresale(interaction, state, cancellationToken);
+        await CreateOrderAndOrderItemWhenIsPresale(interaction, state, cancellationToken);
         
         customer.State = state;
         interaction.EndTime = DateTime.Now;
@@ -96,5 +97,15 @@ public class InteractionManager
             await _orderItemRepository.DeleteAsync(orderItem, cancellationToken);
 
         await _orderRepository.DeleteAsync(interaction.Order, cancellationToken);
+    }
+
+    private async Task CreateOrderAndOrderItemWhenIsPresale(Interaction interaction, InteractionState state, CancellationToken cancellationToken)
+    {
+        if (state != InteractionState.PreSale || interaction.Order is null)
+            return;
+
+        await _orderRepository.SaveAsync(interaction.Order, cancellationToken);
+        foreach (var orderItem in interaction.Order.OrderItems)
+            await _orderItemRepository.SaveAsync(orderItem, cancellationToken);
     }
 }
