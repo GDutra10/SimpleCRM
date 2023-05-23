@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SimpleCRM.Application.Common.Contracts\SimpleCRM.Application.Common.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -14,6 +14,7 @@ using SimpleCRM.Application.Admin.Validators;
 using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
+using SimpleCRM.Application.Backoffice.Validators;
 using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.Application.Common.Contracts.Services;
 using SimpleCRM.Application.Common.Profiles;
@@ -51,6 +52,8 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddValidatorsFromAssemblyContaining<InteractionStartRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<OrderItemAddRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<OrderItemDeleteRQValidator>();
+        // backoffice
+        builder.Services.AddValidatorsFromAssemblyContaining<OrderSearchRQValidator>();
 
         builder.Services
             .AddControllers()

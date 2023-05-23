@@ -29,7 +29,7 @@ public class ProductBaseService : BaseService, IProductBaseService
     public async Task<ProductSearchRS> SearchProductsAsync(ProductSearchRQ productSearchRQ, CancellationToken cancellationToken)
     {
         var onlyActive = productSearchRQ.OnlyActive;
-        var products = await _productManager.GetProductAsync(onlyActive, productSearchRQ.PageNumber, productSearchRQ.PageSize, cancellationToken);
+        var products = await _productManager.GetProductsAsync(onlyActive, productSearchRQ.PageNumber, productSearchRQ.PageSize, cancellationToken);
         var totalRecord = await _productRepository.CountAsync(new ProductSearchSpecification(onlyActive), cancellationToken);
         var hasData = totalRecord > 0;
         var list = Mapper.Map<List<Product>, List<ProductRS>>(products);

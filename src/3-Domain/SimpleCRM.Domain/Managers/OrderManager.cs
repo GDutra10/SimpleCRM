@@ -97,4 +97,9 @@ public class OrderManager
         
         return order;
     }
+    
+    public async Task<List<Order>> GetOrdersAsync(OrderState orderState, int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        return await _orderRepository.GetAllAsync(new OrderSearchSpecification(orderState), pageNumber, pageSize, cancellationToken);
+    }
 }

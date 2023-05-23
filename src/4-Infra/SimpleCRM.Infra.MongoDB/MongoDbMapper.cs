@@ -33,7 +33,7 @@ public class MongoDbMapper : IDbMapper
         BsonClassMap.RegisterClassMap<Interaction>(classMap =>
         {
             classMap.AutoMap();
-            classMap.GetMemberMap(u => u.InteractionState).SetSerializer(new EnumSerializer<InteractionState>(BsonType.String));
+            classMap.GetMemberMap(i => i.InteractionState).SetSerializer(new EnumSerializer<InteractionState>(BsonType.String));
         });
         
         BsonClassMap.RegisterClassMap<Product>(classMap =>
@@ -44,6 +44,7 @@ public class MongoDbMapper : IDbMapper
         BsonClassMap.RegisterClassMap<Order>(classMap =>
         {
             classMap.AutoMap();
+            classMap.GetMemberMap(o => o.OrderState).SetSerializer(new EnumSerializer<OrderState>(BsonType.String));
         });
         
         BsonClassMap.RegisterClassMap<OrderItem>(classMap =>

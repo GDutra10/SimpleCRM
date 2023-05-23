@@ -32,7 +32,7 @@ public class ProductManager
         return product;
     }
 
-    public async Task<List<Product>> GetProductAsync(bool onlyActive, int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<Product>> GetProductsAsync(bool onlyActive, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return await _productRepository.GetAllAsync(new ProductSearchSpecification(onlyActive), pageNumber, pageSize, cancellationToken);
     }

@@ -1,4 +1,5 @@
-﻿using SimpleCRM.Domain.Contracts;
+﻿using SimpleCRM.Domain.Common.Enums;
+using SimpleCRM.Domain.Contracts;
 
 namespace SimpleCRM.Domain.Entities;
 
@@ -7,6 +8,8 @@ public class Order : Record, IDbRecord
     public Guid InteractionId { get; internal set; } = default!;
     
     public List<OrderItem> OrderItems { get; internal set; } = default!;
+
+    public OrderState OrderState { get; internal set; } = OrderState.PreConfirmed;
     
     private Order(){ }
 
