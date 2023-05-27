@@ -54,6 +54,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddValidatorsFromAssemblyContaining<OrderItemDeleteRQValidator>();
         // backoffice
         builder.Services.AddValidatorsFromAssemblyContaining<OrderSearchRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<OrderBackofficeUpdateRQValidator>();
 
         builder.Services
             .AddControllers()

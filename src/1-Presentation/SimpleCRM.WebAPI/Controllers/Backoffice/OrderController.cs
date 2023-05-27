@@ -10,7 +10,7 @@ namespace SimpleCRM.WebAPI.Controllers.Backoffice;
 
 [Authorize]
 [ApiController]
-[Route("backoffice/[controller]s")]
+[Route("Backoffice/[controller]s")]
 public class OrderController : AppBaseController
 {
     private readonly ILogger<OrderController> _logger;
@@ -23,12 +23,31 @@ public class OrderController : AppBaseController
     }
 
     [Authorize]
-    [HttpPost("Start")]
+    [HttpPost]
     [ProducesResponseType(typeof(OrderSearchRS), (int) HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int) HttpStatusCode.BadRequest)]
     [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-    public async Task<OrderSearchRS> InteractionFinishAsync(OrderSearchRQ orderSearchRQ, CancellationToken cancellationToken)
+    public async Task<OrderSearchRS> GetOrders(OrderSearchRQ orderSearchRQ, CancellationToken cancellationToken)
     {
         return await _orderService.SearchOrderAsync(orderSearchRQ, cancellationToken);
+    }
+    [Authorize]
+
+    [HttpGet("{orderId}")]
+    [ProducesResponseType(typeof(OrderRS), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ValidationRS), (int) HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+    public async Task<OrderRS> GetOrder(Guid orderId, CancellationToken cancellationToken)
+    {
+        return await _orderService.GetOrder(orderId, GetAccessTokenFromHeader(), cancellationToken);
+    }
+
+    [HttpPut("{orderId}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(ValidationRS), (int) HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+    public async Task SetState(Guid orderId, OrderBackofficeUpdateRQ request, CancellationToken cancellationToken)
+    {
+        await _orderService.SetOrderState(orderId, GetAccessTokenFromHeader(), request, cancellationToken);
     }
 }

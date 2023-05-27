@@ -9,7 +9,7 @@ public class Order : Record, IDbRecord
     
     public List<OrderItem> OrderItems { get; internal set; } = default!;
 
-    public OrderState OrderState { get; internal set; } = OrderState.PreConfirmed;
+    public OrderState OrderState { get; set; } = OrderState.PreConfirmed;
     
     private Order(){ }
 
