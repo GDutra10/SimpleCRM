@@ -1,4 +1,6 @@
-﻿export class SimpleCRMWebAPI {
+﻿import {SessionConstants} from "../constants/SessionConstants";
+
+export class SimpleCRMWebAPI {
     protected readonly baseUrl: string = "https://localhost:44312";
     
     async executeAsync<T>(httpMethod: HttpMethod, endpoint: string, body: any | null = null, accessToken: string | null = null) : Promise<T> {
@@ -22,8 +24,12 @@
                 response.status === 400 || response.status === 500)
                 return Promise.resolve<T>(await response.json());
             
-            if (response.status === 401)
+            if (response.status === 401){
+                sessionStorage.removeItem(SessionConstants.AccessToken);
+                sessionStorage.removeItem(SessionConstants.ExpiresIn);
                 window.location.reload();
+            }
+                
             
             return { error: "happened something wrong, please try again later"} as T;
         } catch (error: any){
