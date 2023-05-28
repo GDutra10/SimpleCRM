@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Common", "src\2-Application\SimpleCRM.Application.Common\SimpleCRM.Application.Common.csproj", "{0DE161B5-7527-4467-ADF8-F5D1F3078387}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "simplecrm.attendant.webapp", "src\1-Presentation\SimpleCRM.Attendant.WebApp\simplecrm.attendant.webapp.esproj", "{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "simplecrm.attendant.webapp", "src\1-Presentation\simplecrm.attendant.webapp\simplecrm.attendant.webapp.esproj", "{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
