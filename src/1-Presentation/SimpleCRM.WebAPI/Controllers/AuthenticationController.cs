@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Common.Contracts.DTOs;
@@ -27,4 +29,8 @@ public class AuthenticationController : ControllerBase
     {
         return await _authenticationService.TryLoginAsync(loginRQ, cancellationToken);
     }
+
+    [Authorize]
+    [HttpPost("ValidateToken")]
+    public Task<bool> ValidateToken() => Task.FromResult(true);
 }

@@ -1,40 +1,45 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Application", "2-Application", "{2359C6F4-0EC2-4239-9FFD-35D909B00732}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-Domain", "3-Domain", "{07EF96D7-2862-4B72-B582-3C85C830B4D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Infra", "4-Infra", "{C5E451B7-6FD0-4517-8EA7-CFF4A71F0006}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Domain.Common", "src\3-Domain\SimpleCRM.Domain.Common\SimpleCRM.Domain.Common.csproj", "{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Domain.Common", "src\3-Domain\SimpleCRM.Domain.Common\SimpleCRM.Domain.Common.csproj", "{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.WebAPI", "src\1-Presentation\SimpleCRM.WebAPI\SimpleCRM.WebAPI.csproj", "{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.WebAPI", "src\1-Presentation\SimpleCRM.WebAPI\SimpleCRM.WebAPI.csproj", "{A545E3D4-6FCF-4AF2-9BB1-2BE15D8D3816}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Presentation", "1-Presentation", "{750C3CD6-3568-45E7-9245-E3121297BC93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Attendant", "src\2-Application\SimpleCRM.Application.Attendant\SimpleCRM.Application.Attendant.csproj", "{BC384AA5-036C-4160-94FE-14E75E1DF14A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Attendant", "src\2-Application\SimpleCRM.Application.Attendant\SimpleCRM.Application.Attendant.csproj", "{BC384AA5-036C-4160-94FE-14E75E1DF14A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Attendant.Contracts", "src\2-Application\SimpleCRM.Application.Attendant.Contracts\SimpleCRM.Application.Attendant.Contracts.csproj", "{E5D8E201-B310-4854-825A-7FEDF237342F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Attendant.Contracts", "src\2-Application\SimpleCRM.Application.Attendant.Contracts\SimpleCRM.Application.Attendant.Contracts.csproj", "{E5D8E201-B310-4854-825A-7FEDF237342F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Domain", "src\3-Domain\SimpleCRM.Domain\SimpleCRM.Domain.csproj", "{F9A7427B-609C-4919-B666-BBFD08AAD59D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Domain", "src\3-Domain\SimpleCRM.Domain\SimpleCRM.Domain.csproj", "{F9A7427B-609C-4919-B666-BBFD08AAD59D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Infra.MongoDB", "src\4-Infra\SimpleCRM.Infra.MongoDB\SimpleCRM.Infra.MongoDB.csproj", "{34440717-A856-4CEA-B6DD-5794D3B0D8F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Infra.MongoDB", "src\4-Infra\SimpleCRM.Infra.MongoDB\SimpleCRM.Infra.MongoDB.csproj", "{34440717-A856-4CEA-B6DD-5794D3B0D8F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Infra.EntityFrameworkCore", "src\4-Infra\SimpleCRM.Infra.EntityFrameworkCore\SimpleCRM.Infra.EntityFrameworkCore.csproj", "{9DD36C8B-DDFB-4B1A-8D3A-4CBB122DDCA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Infra.EntityFrameworkCore", "src\4-Infra\SimpleCRM.Infra.EntityFrameworkCore\SimpleCRM.Infra.EntityFrameworkCore.csproj", "{9DD36C8B-DDFB-4B1A-8D3A-4CBB122DDCA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Infra", "src\4-Infra\SimpleCRM.Infra\SimpleCRM.Infra.csproj", "{16F5AE06-58CA-4D9C-88AC-669B9DEDE76A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Infra", "src\4-Infra\SimpleCRM.Infra\SimpleCRM.Infra.csproj", "{16F5AE06-58CA-4D9C-88AC-669B9DEDE76A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Admin", "src\2-Application\SimpleCRM.Application.Admin\SimpleCRM.Application.Admin.csproj", "{3B37F9E9-7C25-45CD-B48B-C34A67E8520D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Admin", "src\2-Application\SimpleCRM.Application.Admin\SimpleCRM.Application.Admin.csproj", "{3B37F9E9-7C25-45CD-B48B-C34A67E8520D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Admin.Contracts", "src\2-Application\SimpleCRM.Application.Admin.Contracts\SimpleCRM.Application.Admin.Contracts.csproj", "{C5D643D2-A910-4CAA-B1D4-17CC8BF399C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Admin.Contracts", "src\2-Application\SimpleCRM.Application.Admin.Contracts\SimpleCRM.Application.Admin.Contracts.csproj", "{C5D643D2-A910-4CAA-B1D4-17CC8BF399C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Backoffice", "src\2-Application\SimpleCRM.Application.Backoffice\SimpleCRM.Application.Backoffice.csproj", "{4F4C6266-9F5A-408B-9A05-DC463BEA7BAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Backoffice", "src\2-Application\SimpleCRM.Application.Backoffice\SimpleCRM.Application.Backoffice.csproj", "{4F4C6266-9F5A-408B-9A05-DC463BEA7BAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Backoffice.Contracts", "src\2-Application\SimpleCRM.Application.Backoffice.Contracts\SimpleCRM.Application.Backoffice.Contracts.csproj", "{008954EC-1DDC-48EE-B76F-FBF46B3F7B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Backoffice.Contracts", "src\2-Application\SimpleCRM.Application.Backoffice.Contracts\SimpleCRM.Application.Backoffice.Contracts.csproj", "{008954EC-1DDC-48EE-B76F-FBF46B3F7B4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Common.Contracts", "src\2-Application\SimpleCRM.Application.Common.Contracts\SimpleCRM.Application.Common.Contracts.csproj", "{48690004-6520-4D54-A9AB-9D8896832461}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Common.Contracts", "src\2-Application\SimpleCRM.Application.Common.Contracts\SimpleCRM.Application.Common.Contracts.csproj", "{48690004-6520-4D54-A9AB-9D8896832461}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application.Common", "src\2-Application\SimpleCRM.Application.Common\SimpleCRM.Application.Common.csproj", "{0DE161B5-7527-4467-ADF8-F5D1F3078387}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Common", "src\2-Application\SimpleCRM.Application.Common\SimpleCRM.Application.Common.csproj", "{0DE161B5-7527-4467-ADF8-F5D1F3078387}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "simplecrm.attendant.webapp", "src\1-Presentation\SimpleCRM.Attendant.WebApp\simplecrm.attendant.webapp.esproj", "{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +103,15 @@ Global
 		{0DE161B5-7527-4467-ADF8-F5D1F3078387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE161B5-7527-4467-ADF8-F5D1F3078387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DE161B5-7527-4467-ADF8-F5D1F3078387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{59E222DA-19CB-4CE6-A2F2-EB6D19B1DB4D} = {07EF96D7-2862-4B72-B582-3C85C830B4D8}
@@ -114,5 +128,9 @@ Global
 		{008954EC-1DDC-48EE-B76F-FBF46B3F7B4C} = {2359C6F4-0EC2-4239-9FFD-35D909B00732}
 		{48690004-6520-4D54-A9AB-9D8896832461} = {2359C6F4-0EC2-4239-9FFD-35D909B00732}
 		{0DE161B5-7527-4467-ADF8-F5D1F3078387} = {2359C6F4-0EC2-4239-9FFD-35D909B00732}
+		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823} = {750C3CD6-3568-45E7-9245-E3121297BC93}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A232443-68AD-4DDA-B39E-BF11A1F1FD11}
 	EndGlobalSection
 EndGlobal
