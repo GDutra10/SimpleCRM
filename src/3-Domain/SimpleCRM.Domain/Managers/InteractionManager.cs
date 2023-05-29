@@ -9,7 +9,7 @@ namespace SimpleCRM.Domain.Managers;
 
 public class InteractionManager
 {
-    public static readonly ReadOnlyCollection<InteractionState?> AvailableStatus = new ReadOnlyCollection<InteractionState?>(new List<InteractionState?>() { null, InteractionState.NotAvailable, InteractionState.InAttendance });
+    public static readonly ReadOnlyCollection<InteractionState?> AvailableStatus = new ReadOnlyCollection<InteractionState?>(new List<InteractionState?>() { InteractionState.None, InteractionState.NotAvailable, InteractionState.InAttendance });
     public static readonly ReadOnlyCollection<InteractionState?> FinishStatus = new ReadOnlyCollection<InteractionState?>(new List<InteractionState?>() { InteractionState.NotInterested, InteractionState.NotAvailable, InteractionState.PreSale });
     public static readonly ReadOnlyCollection<InteractionState?> FinalizedStatus = new ReadOnlyCollection<InteractionState?>(new List<InteractionState?>() { InteractionState.NotInterested, InteractionState.Sale, InteractionState.PreSale });
     private readonly IRepository<Interaction> _interactionRepository;

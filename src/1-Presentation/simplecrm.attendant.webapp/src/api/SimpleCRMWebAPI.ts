@@ -3,15 +3,16 @@
 export class SimpleCRMWebAPI {
     protected readonly baseUrl: string = "https://localhost:44312";
     
-    async executeAsync<T>(httpMethod: HttpMethod, endpoint: string, body: any | null = null, accessToken: string | null = null) : Promise<T> {
+    async executeAsync<T>(httpMethod: HttpMethod, endpoint: string, body: any | null = null, mustUseAccessToken: boolean = false) : Promise<T> {
         
         try{
+            const accessToken = sessionStorage.getItem(SessionConstants.AccessToken);
             const init: RequestInit = { 
                 method: httpMethod.toString(),
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": (accessToken === null) ? "" : `Bearer ${accessToken}`
+                    "Authorization": (mustUseAccessToken) ? `Bearer ${accessToken}` : ""
                 }
             };
 

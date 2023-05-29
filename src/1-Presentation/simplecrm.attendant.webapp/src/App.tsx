@@ -15,7 +15,7 @@ function App() {
   if (!accessToken)
     return <Login></Login>;
 
-  new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, "/Authentication/ValidateToken", null, accessToken)
+  new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, "/Authentication/ValidateToken", null, true)
   
   return (
       <>

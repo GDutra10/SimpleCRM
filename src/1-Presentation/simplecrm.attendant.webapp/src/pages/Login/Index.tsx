@@ -3,7 +3,7 @@ import {HttpMethod, SimpleCRMWebAPI} from "../../api/SimpleCRMWebAPI";
 import {LoginRS} from "../../models/api/responses/LoginRS";
 import {LoginRQ} from "../../models/api/requests/LoginRQ";
 import {SessionConstants} from "../../constants/SessionConstants";
-import Control from "../../components/common/Control";
+import Control from "../../components/common/Control/Index";
 
 function Login() {
     let [email, setEmail] = useState<string>("");

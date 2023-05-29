@@ -1,9 +1,11 @@
-﻿function Control(props: ControlProps){
+﻿import "./Index.css";
+
+function Control(props: ControlProps){
     return <>
-        <div className="form-control">
+        <div className="control">
             <label className="text-control">{props.label}</label>
             <input className="input-control" type={props.type} onChange={event=> props.onChange(event) } value={props.value} required={props.required}/>
-            <label className="error-control">{props.error}</label>
+            <label className="validation-control">{props.error}</label>
         </div>
     </>;
 }
@@ -22,6 +24,7 @@ Control.defaultProps = {
     value: "",
     error: "",
     required: false,
+    onChange: () => {} 
 }
 
 export default Control;
