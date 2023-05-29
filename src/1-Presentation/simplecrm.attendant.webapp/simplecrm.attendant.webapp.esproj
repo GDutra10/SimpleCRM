@@ -16,6 +16,5 @@
   <ItemGroup>
     <Folder Include="src\contexts\" />
     <Folder Include="src\hooks\" />
-    <Folder Include="src\pages\Customer\" />
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ import Layout from "./pages/Layout";
 import Login from "./pages/Login/Index";
 import Home from './pages/Home/Index';
 import NotFound from "./pages/404/Index";
+import Interaction from "./pages/Interaction/Interaction";
 
 function App() {
   const accessToken = sessionStorage.getItem(SessionConstants.AccessToken);
@@ -23,6 +24,7 @@ function App() {
               <Routes>
                   <Route path="/" element={<Layout/>}>
                       <Route path="/" element={<Home/>}></Route>
+                      <Route path="/interaction/:idCustomer" element={<Interaction/>}></Route>
                       <Route path="/404" element={<NotFound/>}></Route>
                   </Route>
               </Routes>

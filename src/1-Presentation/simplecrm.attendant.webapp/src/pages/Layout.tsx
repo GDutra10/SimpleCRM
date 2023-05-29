@@ -3,9 +3,12 @@
 function Layout(){
     return (
         <>
-            <nav className="menu">
-                <ul>
-                    <li><Link to="/">Home</Link></li>
+            <nav className="navbar">
+                <a className="navbar-brand">Simple CRM - Attendant</a>
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <Link to="/" className="nav-link">Home</Link>
+                    </li>
                 </ul>
             </nav>
             <div className="App">
