@@ -14,7 +14,8 @@
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\contexts\" />
-    <Folder Include="src\hooks\" />
+    <Folder Include="src\domain\" />
+    <Folder Include="src\infra\" />
+    <Folder Include="src\presentation\" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 ﻿import {useState} from "react";
 import Control from "../../components/common/Control/Index";
-import {HttpMethod, SimpleCRMWebAPI} from "../../api/SimpleCRMWebAPI";
-import {CustomerSearchRS} from "../../models/api/responses/CustomerSearchRS";
-import {CustomerSearchRQ} from "../../models/api/requests/CustomerSearchRQ";
 import CustomerAddModal from "../../components/CustomerAddModal";
 import CustomerTable from "../../components/CustomerTable";
+import {CustomerSearchRS} from "../../../domain/models/api/responses/CustomerSearchRS";
+import {HttpMethod, SimpleCRMWebAPI} from "../../../infra/api/SimpleCRMWebAPI";
+import {CustomerSearchRQ} from "../../../domain/models/api/requests/CustomerSearchRQ";
 
 function Home(){
     let [name, setName] = useState<string>("");

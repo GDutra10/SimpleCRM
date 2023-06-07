@@ -1,9 +1,9 @@
 ﻿import {useState} from "react";
 import Control from "./common/Control/Index";
 import Modal from "./common/Modal/Index";
-import {HttpMethod, SimpleCRMWebAPI} from "../api/SimpleCRMWebAPI";
-import {CustomerRegisterRQ} from "../models/api/requests/CustomerRegisterRQ";
-import {CustomerRS} from "../models/api/responses/CustomerRS";
+import {HttpMethod, SimpleCRMWebAPI} from "../../infra/api/SimpleCRMWebAPI";
+import {CustomerRegisterRQ} from "../../domain/models/api/requests/CustomerRegisterRQ";
+import {CustomerRS} from "../../domain/models/api/responses/CustomerRS";
 
 function CustomerAddModal(props: Props){
     let [name, setName] = useState<string>("");
@@ -52,7 +52,6 @@ function CustomerAddModal(props: Props){
             
             return;
         }
-
         
         alert(`Customer ${customerRS.name} registered successfully!`);
         setName("");
