@@ -48,6 +48,7 @@ public class InteractionService : BaseService, IInteractionService
         var interaction = await _interactionManager.CreateInteractionAsync(user, customer, cancellationToken);
         
         await _interactionRepository.SaveAsync(interaction, cancellationToken);
+        await _customerRepository.SaveAsync(customer!, cancellationToken);
 
         return Mapper.Map<Interaction, InteractionRS>(interaction);
     }

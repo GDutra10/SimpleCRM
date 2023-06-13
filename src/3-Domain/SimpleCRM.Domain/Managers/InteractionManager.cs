@@ -42,8 +42,11 @@ public class InteractionManager
 
         if (FinalizedStatus.Contains(customer.State))
             throw new BusinessException($"It is not possible to interact with customer '{customer.Name}'! Customer is finalized!");
+
+        var interaction = new Interaction(user, customer);
+        customer.State = interaction.InteractionState;
         
-        return await Task.FromResult(new Interaction(user, customer));
+        return await Task.FromResult(interaction);
     }
 
     public async Task FinishInteractionAsync(InteractionState state, Interaction? interaction, Customer? customer, User? userRequested, CancellationToken cancellationToken)
