@@ -50,8 +50,10 @@ public static class WebApplicationBuilderExtensions
         // attendant
         builder.Services.AddValidatorsFromAssemblyContaining<CustomerRegisterRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<InteractionStartRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<InteractionFinishRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<OrderItemAddRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<OrderItemDeleteRQValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<CustomerPropsValidator>();
         // backoffice
         builder.Services.AddValidatorsFromAssemblyContaining<OrderSearchRQValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<OrderBackofficeUpdateRQValidator>();

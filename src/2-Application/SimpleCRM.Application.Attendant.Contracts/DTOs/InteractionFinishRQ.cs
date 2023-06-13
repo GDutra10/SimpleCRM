@@ -6,4 +6,5 @@ public class InteractionFinishRQ : BaseRQ
 {
     public Guid InteractionId { get; set; }
     public InteractionState State { get; set; }
+    public CustomerProps? CustomerProps { get; set; }
 }

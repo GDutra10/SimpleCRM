@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import {HttpMethod, SimpleCRMWebAPI} from "../../api/SimpleCRMWebAPI";
-import {LoginRS} from "../../models/api/responses/LoginRS";
-import {LoginRQ} from "../../models/api/requests/LoginRQ";
-import {SessionConstants} from "../../constants/SessionConstants";
 import Control from "../../components/common/Control/Index";
+import {HttpMethod, SimpleCRMWebAPI} from "../../../infra/api/SimpleCRMWebAPI";
+import {LoginRQ} from "../../../domain/models/api/requests/LoginRQ";
+import {LoginRS} from "../../../domain/models/api/responses/LoginRS";
+import {SessionConstants} from "../../../domain/constants/SessionConstants";
+import {AuthenticationEndpoint} from "../../../domain/constants/EndpointConstants";
 
 function Login() {
     let [email, setEmail] = useState<string>("");
@@ -20,7 +21,7 @@ function Login() {
         
         const api : SimpleCRMWebAPI = new SimpleCRMWebAPI();
         const loginRQ : LoginRQ = { email: email, password: password };
-        const loginRS : LoginRS = await api.executeAsync<LoginRS>(HttpMethod.Post, "/Authentication/Login", loginRQ);
+        const loginRS : LoginRS = await api.executeAsync<LoginRS>(HttpMethod.Post, AuthenticationEndpoint.Login, loginRQ);
         
         console.log(loginRS);
         

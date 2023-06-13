@@ -52,6 +52,11 @@ a{
   cursor: pointer;
 }
 
+div:disabled{
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .btn{
   font-weight: 400;
   text-align: center;

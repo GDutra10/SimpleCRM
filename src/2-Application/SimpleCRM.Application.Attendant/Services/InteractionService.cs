@@ -77,11 +77,27 @@ public class InteractionService : BaseService, IInteractionService
         var user = await GetUserByToken(token, cancellationToken);
         var interaction = await _interactionRepository.GetAsync(interactionFinishRQ.InteractionId, cancellationToken);
         var customer = await _customerRepository.GetAsync(interaction?.CustomerId ?? Guid.Empty, cancellationToken);
-        
+
         await _interactionManager.FinishInteractionAsync(interactionFinishRQ.State, interaction, customer, user, cancellationToken);
+        UpdateCustomer(customer, interactionFinishRQ.CustomerProps);
         await _customerRepository.SaveAsync(customer!, cancellationToken);
         await _interactionRepository.SaveAsync(interaction!, cancellationToken);
 
         return Mapper.Map<Interaction, InteractionRS>(interaction!);
+    }
+
+    private static void UpdateCustomer(Customer? customer, CustomerProps? customerProps)
+    {
+        if (customer == null || customerProps == null) 
+            return;
+        
+        if (customerProps.Name is not null)
+            customer.Name = customerProps.Name;
+            
+        if (customerProps.Email is not null)
+            customer.Email = customerProps.Email;
+            
+        if (customerProps.Telephone is not null)
+            customer.Telephone = customerProps.Telephone;
     }
 }

@@ -10,6 +10,7 @@ import Home from './presentation/pages/Home/Index';
 import NotFound from "./presentation/pages/404/Index";
 import Interaction from "./presentation/pages/Interaction/Interaction";
 import {InteractionRSProvider} from "./presentation/contexts/InteractionRSContext";
+import {AuthenticationEndpoint} from "./domain/constants/EndpointConstants";
 
 function App() {
   const accessToken = sessionStorage.getItem(SessionConstants.AccessToken);
@@ -17,7 +18,7 @@ function App() {
   if (!accessToken)
     return <Login></Login>;
 
-  new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, "/Authentication/ValidateToken", null, true)
+  new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, AuthenticationEndpoint.ValidateToken, null, true)
   
   return (
       <>

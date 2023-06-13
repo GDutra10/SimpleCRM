@@ -1,5 +1,5 @@
 ﻿import { createContext, ReactNode, useState } from "react";
-import {InteractionRS} from "../models/api/responses/InteractionRS";
+import {InteractionRS} from "../../domain/models/api/responses/InteractionRS";
 
 export const InteractionRSContext = createContext<InteractionRSContextType>({
     interaction: null,
@@ -13,7 +13,6 @@ export function InteractionRSProvider({ children }: Props){
         {children}
     </InteractionRSContext.Provider>
 }
-
 
 type InteractionRSContextType = {
     interaction: InteractionRS | null,

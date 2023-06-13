@@ -4,6 +4,7 @@ import Modal from "./common/Modal/Index";
 import {HttpMethod, SimpleCRMWebAPI} from "../../infra/api/SimpleCRMWebAPI";
 import {CustomerRegisterRQ} from "../../domain/models/api/requests/CustomerRegisterRQ";
 import {CustomerRS} from "../../domain/models/api/responses/CustomerRS";
+import {CustomerEndpoint} from "../../domain/constants/EndpointConstants";
 
 function CustomerAddModal(props: Props){
     let [name, setName] = useState<string>("");
@@ -23,7 +24,7 @@ function CustomerAddModal(props: Props){
             email: email,
             telephone: telephone
         };
-        const customerRS = await api.executeAsync<CustomerRS>(HttpMethod.Post, "/Attendant/Customers", customerRegisterRQ, true);
+        const customerRS = await api.executeAsync<CustomerRS>(HttpMethod.Post, CustomerEndpoint.Customers, customerRegisterRQ, true);
         
         if (!customerRS){
             alert("something wrong, please try again later!");

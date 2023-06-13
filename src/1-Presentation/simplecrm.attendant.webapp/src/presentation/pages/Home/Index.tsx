@@ -5,6 +5,7 @@ import CustomerTable from "../../components/CustomerTable";
 import {CustomerSearchRS} from "../../../domain/models/api/responses/CustomerSearchRS";
 import {HttpMethod, SimpleCRMWebAPI} from "../../../infra/api/SimpleCRMWebAPI";
 import {CustomerSearchRQ} from "../../../domain/models/api/requests/CustomerSearchRQ";
+import {CustomerEndpoint} from "../../../domain/constants/EndpointConstants";
 
 function Home(){
     let [name, setName] = useState<string>("");
@@ -23,7 +24,7 @@ function Home(){
             pageSize: 50
         };
         const query = new URLSearchParams({...customerSearchRQ, pageNumber: customerSearchRQ.pageNumber.toString(), pageSize: customerSearchRQ.pageSize.toString()}).toString();
-        const customerSearchRS = await api.executeAsync<CustomerSearchRS>(HttpMethod.Get, `/Attendant/Customers?${query}`, null, true);
+        const customerSearchRS = await api.executeAsync<CustomerSearchRS>(HttpMethod.Get, `${CustomerEndpoint.Customers}?${query}`, null, true);
         
         setCustomerSearchRS(customerSearchRS);
     }

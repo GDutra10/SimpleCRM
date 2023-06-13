@@ -1,4 +1,4 @@
-﻿import {SessionConstants} from "../constants/SessionConstants";
+﻿import {SessionConstants} from "../../domain/constants/SessionConstants";
 
 export class SimpleCRMWebAPI {
     protected readonly baseUrl: string = "https://localhost:44312";

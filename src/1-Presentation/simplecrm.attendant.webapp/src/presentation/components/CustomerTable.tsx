@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {HttpMethod, SimpleCRMWebAPI} from "../../infra/api/SimpleCRMWebAPI";
 import {InteractionRS} from "../../domain/models/api/responses/InteractionRS";
 import {CustomerSearchRS} from "../../domain/models/api/responses/CustomerSearchRS";
+import {InteractionEndpoint} from "../../domain/constants/EndpointConstants";
 
 function CustomerTable(props: Props) {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ function CustomerTable(props: Props) {
         const button = event.target as HTMLButtonElement;    
         const api : SimpleCRMWebAPI = new SimpleCRMWebAPI();
         const query = new URLSearchParams({CustomerId: customerId}).toString();
-        const interactionRS = await api.executeAsync<InteractionRS>(HttpMethod.Post, `/Attendant/Interactions/Start?${query}`, null, true);
+        const interactionRS = await api.executeAsync<InteractionRS>(HttpMethod.Post, `${InteractionEndpoint.Start}?${query}`, null, true);
 
         button.disabled = true;
         
