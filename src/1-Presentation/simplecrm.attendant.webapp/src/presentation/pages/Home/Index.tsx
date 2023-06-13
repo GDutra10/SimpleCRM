@@ -7,6 +7,8 @@ import {HttpMethod, SimpleCRMWebAPI} from "../../../infra/api/SimpleCRMWebAPI";
 import {CustomerSearchRQ} from "../../../domain/models/api/requests/CustomerSearchRQ";
 import {CustomerEndpoint} from "../../../domain/constants/EndpointConstants";
 
+import './Index.css';
+
 function Home(){
     let [name, setName] = useState<string>("");
     let [email, setEmail] = useState<string>("");

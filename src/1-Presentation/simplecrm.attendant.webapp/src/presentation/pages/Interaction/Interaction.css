@@ -1,0 +1,39 @@
+﻿.products{
+    min-width: 50%;
+    float: left;
+}
+
+.order-items{
+    min-width: 48%;
+    float: left;
+    margin-left: 20px;
+}
+
+.row .control{
+    width: 49%;
+    float: left;
+    margin-right: 5px;
+}
+
+.actions{
+    width: 100%;
+    float: left;
+}
+
+.actions .btn{
+    margin-left: 10px;
+    margin-top: 25px;
+}
+
+.actions .control{
+    width: 150px;
+    float: left;
+}
+
+#validationModalId .modal-content{
+    background: #ffc107;
+}
+
+#errorModalId .modal-content{
+    background: #dc3545;
+}
