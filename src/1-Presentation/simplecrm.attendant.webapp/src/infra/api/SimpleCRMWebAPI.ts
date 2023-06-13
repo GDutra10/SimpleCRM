@@ -1,4 +1,5 @@
 ﻿import {SessionConstants} from "../../domain/constants/SessionConstants";
+import {LoginHelper} from "../../domain/helpers/LoginHelper";
 
 export class SimpleCRMWebAPI {
     protected readonly baseUrl: string = "https://localhost:44312";
@@ -26,9 +27,7 @@ export class SimpleCRMWebAPI {
                 return Promise.resolve<T>(await response.json());
             
             if (response.status === 401){
-                sessionStorage.removeItem(SessionConstants.AccessToken);
-                sessionStorage.removeItem(SessionConstants.ExpiresIn);
-                window.location.reload();
+                LoginHelper.Logout();
             }
                 
             

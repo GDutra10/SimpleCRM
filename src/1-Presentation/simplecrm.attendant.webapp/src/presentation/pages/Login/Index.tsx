@@ -6,6 +6,8 @@ import {LoginRS} from "../../../domain/models/api/responses/LoginRS";
 import {SessionConstants} from "../../../domain/constants/SessionConstants";
 import {AuthenticationEndpoint} from "../../../domain/constants/EndpointConstants";
 
+import './Index.css';
+
 function Login() {
     let [email, setEmail] = useState<string>("");
     let [password, setPassword] = useState<string>("");
@@ -57,24 +59,27 @@ function Login() {
     }
     
     return <>
-        <div className="form">
-            <Control 
-                label="Email" 
-                type="text" 
-                value={email} 
-                error={emailValidation}
-                onChange={async event => setEmail(event.target.value) } 
-                required></Control>
-            <Control 
-                label="Password" 
-                type="password" 
-                value={password} 
-                error={passwordValidation} 
-                onChange={async event => setPassword(event.target.value)} 
-                required></Control>
-            <label>{globalValidation}</label>
-            
-            <button onClick={async event => await tryLogin(event)}>Login</button>
+        <div className="content login">
+            <div className="form">
+                <h1>Simple CRM</h1>
+                <Control 
+                    label="Email" 
+                    type="text" 
+                    value={email} 
+                    error={emailValidation}
+                    onChange={async event => setEmail(event.target.value) } 
+                    required></Control>
+                <Control 
+                    label="Password" 
+                    type="password" 
+                    value={password} 
+                    error={passwordValidation} 
+                    onChange={async event => setPassword(event.target.value)} 
+                    required></Control>
+                <label>{globalValidation}</label>
+                
+                <button className='btn btn-primary' onClick={async event => await tryLogin(event)}>Login</button>
+            </div>
         </div>
     </>;
 }

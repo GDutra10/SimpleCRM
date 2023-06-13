@@ -1,5 +1,4 @@
 .App {
-  /*text-align: center;*/
   font-family: 'Roboto';
   font-size: 16px;
   margin-left: 5%;
@@ -70,6 +69,8 @@ div:disabled{
   color: white;
   width: 100px;
   margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .btn:disabled{
@@ -137,6 +138,7 @@ div:disabled{
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ced4da;
 }
 
 .navbar-brand{
