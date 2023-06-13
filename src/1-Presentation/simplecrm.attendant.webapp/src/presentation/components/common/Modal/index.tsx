@@ -1,6 +1,6 @@
-﻿import './Index.css';
+﻿import './index.css';
 
-function Modal(props: Props){
+export function Modal(props: Props){
     function close(){
         document.getElementById(props.id)!.style.display = "none";
     }

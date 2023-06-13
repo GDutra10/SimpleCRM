@@ -1,12 +1,14 @@
 ﻿import {useState} from "react";
 import Control from "./common/Control/Index";
-import Modal from "./common/Modal/Index";
 import {HttpMethod, SimpleCRMWebAPI} from "../../infra/api/SimpleCRMWebAPI";
 import {CustomerRegisterRQ} from "../../domain/models/api/requests/CustomerRegisterRQ";
 import {CustomerRS} from "../../domain/models/api/responses/CustomerRS";
 import {CustomerEndpoint} from "../../domain/constants/EndpointConstants";
+import Modal from "./common/Modal";
+import {useModalContext} from "../hooks/useModalContext";
 
 function CustomerAddModal(props: Props){
+    const modalContext = useModalContext();
     let [name, setName] = useState<string>("");
     let [email, setEmail] = useState<string>("");
     let [telephone, setTelephone] = useState<string>("");
@@ -27,13 +29,13 @@ function CustomerAddModal(props: Props){
         const customerRS = await api.executeAsync<CustomerRS>(HttpMethod.Post, CustomerEndpoint.Customers, customerRegisterRQ, true);
         
         if (!customerRS){
-            alert("something wrong, please try again later!");
+            setGlobalValidation("something wrong, please try again later!");
             button.disabled = false;
             return;
         }
             
         if (customerRS.error){
-            alert(customerRS.error);
+            setGlobalValidation(customerRS.error);
             button.disabled = false;
             return;
         }
@@ -54,13 +56,14 @@ function CustomerAddModal(props: Props){
             return;
         }
         
-        alert(`Customer ${customerRS.name} registered successfully!`);
         setName("");
         setEmail("");
         setTelephone("");
         setGlobalValidation("");
 
         button.disabled = false;
+        
+        modalContext.showSuccess(`Customer ${customerRS.name} registered successfully!`);
     }
     
     function clearValidations(){

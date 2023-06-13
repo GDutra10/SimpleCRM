@@ -1,4 +1,5 @@
-﻿import {useNavigate, useParams} from "react-router-dom";
+﻿import './Interaction.css';
+import {useNavigate, useParams} from "react-router-dom";
 import {useInteractionContext} from "../../hooks/useInteraction";
 import Control, {SelectOption} from "../../components/common/Control/Index";
 import {useEffect, useState} from "react";
@@ -12,16 +13,13 @@ import {InteractionRS} from "../../../domain/models/api/responses/InteractionRS"
 import {InteractionFinishRQ} from "../../../domain/models/api/requests/InteractionFinishRQ";
 import {OrderItemAddRQ} from "../../../domain/models/api/requests/OrderItemAddRQ";
 import {OrderRS} from "../../../domain/models/api/responses/OrderRS";
-
-import './Interaction.css';
 import {OrderItemDeleteRQ} from "../../../domain/models/api/requests/OrderItemDeleteRQ";
-import Modal from "../../components/common/Modal/Index";
-import {Validation} from "../../../domain/models/api/Validation";
+import {useModalContext} from "../../hooks/useModalContext";
+import {Logger} from "../../../infra/logger/Logger";
 
 function Interaction(){
     const api : SimpleCRMWebAPI = new SimpleCRMWebAPI();
-    const validationModalId = "validationModalId";
-    const errorModalId = "errorModalId";
+    const modalContext = useModalContext();
     const navigate = useNavigate();
     const params = useParams();
     const customerId = params.customerId;
@@ -33,17 +31,16 @@ function Interaction(){
     let [state, setState] = useState<string>(customer?.state ?? "");
     let [productSearchRS, setProductSearchRS] = useState<ProductSearchRS | null>(null);
     let [orderRS, setOrderRS] = useState<OrderRS | null>(null);
-    let [validations, setValidations] = useState<Validation[] | null>(null);
-    let [error, setError] = useState<string>("");
     let shouldRedirect = false;
     let productLoaded = false;
     
     useEffect(() => {
         loadProducts_onLoad()
-            .then(productSearchRS => { 
-                console.log("product loaded");
+            .then(productSearchRS => {
+                Logger.logDebug("product loaded");
                 setProductSearchRS(productSearchRS);
-            });
+            })
+            .catch(e => { Logger.logError("fail to get products!"); });
         
         if (shouldRedirect)
             navigate(-1);
@@ -52,7 +49,7 @@ function Interaction(){
     if (!interaction || !customer){
         let message = "invalid interaction, redirecting to home..";
 
-        alert(message);
+        Logger.logWarn(message);
         shouldRedirect = true;
         setInteraction(null);
         
@@ -67,6 +64,8 @@ function Interaction(){
     }
 
     async function finish_onClick(event: React.MouseEvent<HTMLButtonElement>){
+        Logger.logInfo("finishing interaction");
+        
         const button = event.target as HTMLButtonElement;
         let shouldRedirect = false;
         button.disabled = true;
@@ -83,9 +82,9 @@ function Interaction(){
         const interactionRS = await api.executeAsync<InteractionRS>(HttpMethod.Put, InteractionEndpoint.Finish, interactionFinishRQ, true);
         
         if (interactionRS.error){
-            showError(interactionRS.error);
+            modalContext.showError(interactionRS.error);
         } else if (interactionRS.validations && interactionRS.validations.length > 0){
-            showValidations(interactionRS.validations);
+            modalContext.showValidations(interactionRS.validations);
         } else {
             shouldRedirect = true;
         }
@@ -99,6 +98,8 @@ function Interaction(){
     }
     
     async function addOrder_onClick(event: React.MouseEvent<HTMLButtonElement>, productId: string){
+        Logger.logInfo(`adding order ProductId: ${productId}`);
+        
         const button = event.target as HTMLButtonElement;
         button.disabled = true;
         
@@ -109,9 +110,9 @@ function Interaction(){
         const orderRS = await api.executeAsync<OrderRS>(HttpMethod.Post, InteractionEndpoint.Order, orderItemAddRQ, true);
 
         if (orderRS.error){
-            showError(orderRS.error);
+            modalContext.showError(orderRS.error);
         } else if (orderRS.validations && orderRS.validations.length > 0){
-            showValidations(orderRS.validations);
+            modalContext.showValidations(orderRS.validations);
         } else {
             setOrderRS(orderRS);
         }
@@ -120,6 +121,8 @@ function Interaction(){
     }
     
     async function removeOrderItem_onClick(event: React.MouseEvent<HTMLButtonElement>, orderItemId: string){
+        Logger.logInfo(`removing order item: ${orderItemId}`);
+        
         const button = event.target as HTMLButtonElement;
         button.disabled = true;
 
@@ -130,24 +133,14 @@ function Interaction(){
         const orderRS = await api.executeAsync<OrderRS>(HttpMethod.Delete, InteractionEndpoint.Order, orderItemDeleteRQ, true);
 
         if (orderRS.error){
-            showError(orderRS.error);
+            modalContext.showError(orderRS.error);
         } else if (orderRS.validations && orderRS.validations.length > 0){
-            showValidations(orderRS.validations);
+            modalContext.showValidations(orderRS.validations);
         } else {
             setOrderRS(orderRS);
         }
         
         button.disabled = false;
-    }
-    
-    function showError(error: string){
-        setError(error);
-        document.getElementById(errorModalId)!.style.display = "block"
-    }
-    
-    function showValidations(validations: Validation[]){
-        setValidations(validations);
-        document.getElementById(validationModalId)!.style.display = "block"
     }
     
     return <>
@@ -219,35 +212,6 @@ function Interaction(){
                 <button className="btn btn-primary" onClick={async event => await finish_onClick(event)}>Finish</button>
             </div>
         </div>
-        
-        <Modal id={validationModalId} 
-               title="Validation"
-               body={<>
-               {validations && validations.length > 0 
-                   ? <>
-                       <ul>
-                       {validations.map(v => {
-                           return <>
-                               <li>{v.message}</li>    
-                               </>
-                           })}
-                       </ul>
-                   </>
-                   : <>no validations to show</>
-               }
-               </>}
-               footer={<></>}
-        >
-            <></>
-        </Modal>
-
-        <Modal id={errorModalId}
-               title="Error"
-               body={<><span>{error}</span></>}
-               footer={<></>}
-        >
-            <></>
-        </Modal>
     </>;
 }
 

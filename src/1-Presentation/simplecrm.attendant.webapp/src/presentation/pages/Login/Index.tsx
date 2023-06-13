@@ -7,6 +7,7 @@ import {SessionConstants} from "../../../domain/constants/SessionConstants";
 import {AuthenticationEndpoint} from "../../../domain/constants/EndpointConstants";
 
 import './Index.css';
+import {Logger} from "../../../infra/logger/Logger";
 
 function Login() {
     let [email, setEmail] = useState<string>("");
@@ -25,7 +26,7 @@ function Login() {
         const loginRQ : LoginRQ = { email: email, password: password };
         const loginRS : LoginRS = await api.executeAsync<LoginRS>(HttpMethod.Post, AuthenticationEndpoint.Login, loginRQ);
         
-        console.log(loginRS);
+        Logger.logDebug(JSON.stringify(loginRS));
         
         if (!loginRS){
             (event.target as HTMLButtonElement).disabled = false;
@@ -62,6 +63,7 @@ function Login() {
         <div className="content login">
             <div className="form">
                 <h1>Simple CRM</h1>
+                <h2>Attendant</h2>
                 <Control 
                     label="Email" 
                     type="text" 

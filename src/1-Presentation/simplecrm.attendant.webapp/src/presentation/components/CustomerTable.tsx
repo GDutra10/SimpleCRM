@@ -4,9 +4,11 @@ import {HttpMethod, SimpleCRMWebAPI} from "../../infra/api/SimpleCRMWebAPI";
 import {InteractionRS} from "../../domain/models/api/responses/InteractionRS";
 import {CustomerSearchRS} from "../../domain/models/api/responses/CustomerSearchRS";
 import {InteractionEndpoint} from "../../domain/constants/EndpointConstants";
+import {useModalContext} from "../hooks/useModalContext";
 
 function CustomerTable(props: Props) {
     const navigate = useNavigate();
+    const modalContext = useModalContext();
     let { setInteraction} = useInteractionContext();
     
     if (!props.customerSearchRS)
@@ -27,13 +29,13 @@ function CustomerTable(props: Props) {
         button.disabled = true;
         
         if (interactionRS.error && interactionRS.error.length > 0){
-            alert(interactionRS.error);
+            modalContext.showError(interactionRS.error);
             button.disabled = false;
             return;
         }
 
         if (interactionRS.validations && interactionRS.validations.length > 0){
-            alert(interactionRS.validations[0].message);
+            modalContext.showValidations(interactionRS.validations);
             button.disabled = false;
             return;
         }

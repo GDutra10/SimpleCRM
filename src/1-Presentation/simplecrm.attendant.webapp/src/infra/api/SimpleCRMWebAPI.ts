@@ -1,5 +1,6 @@
 ﻿import {SessionConstants} from "../../domain/constants/SessionConstants";
 import {LoginHelper} from "../../domain/helpers/LoginHelper";
+import {Logger} from "../logger/Logger";
 
 export class SimpleCRMWebAPI {
     protected readonly baseUrl: string = "https://localhost:44312";
@@ -27,6 +28,7 @@ export class SimpleCRMWebAPI {
                 return Promise.resolve<T>(await response.json());
             
             if (response.status === 401){
+                Logger.logWarn("not authorized (401), forcing logout!")
                 LoginHelper.Logout();
             }
                 

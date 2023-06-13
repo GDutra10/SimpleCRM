@@ -29,11 +29,3 @@
     width: 150px;
     float: left;
 }
-
-#validationModalId .modal-content{
-    background: #ffc107;
-}
-
-#errorModalId .modal-content{
-    background: #dc3545;
-}

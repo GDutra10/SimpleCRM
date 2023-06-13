@@ -11,27 +11,36 @@ import NotFound from "./presentation/pages/404/Index";
 import Interaction from "./presentation/pages/Interaction/Interaction";
 import {InteractionRSProvider} from "./presentation/contexts/InteractionRSContext";
 import {AuthenticationEndpoint} from "./domain/constants/EndpointConstants";
+import {ModalProvider} from "./presentation/contexts/ModalContext";
+import {Logger} from "./infra/logger/Logger";
 
 function App() {
-  const accessToken = sessionStorage.getItem(SessionConstants.AccessToken);
+    Logger.logDebug("------------------------");
+    Logger.logDebug("Stating app");
+    const accessToken = sessionStorage.getItem(SessionConstants.AccessToken);
   
-  if (!accessToken)
-    return <Login></Login>;
+    if (!accessToken){
+        Logger.logDebug("access token null, showing login page...");
+        return <Login></Login>;
+    }
 
-  new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, AuthenticationEndpoint.ValidateToken, null, true)
+    Logger.logDebug("checking the access token");
+    new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, AuthenticationEndpoint.ValidateToken, null, true)
   
-  return (
+    return (
       <>
           <BrowserRouter>
-              <InteractionRSProvider>
-                  <Routes>
-                      <Route path="/" element={<Layout/>}>
-                          <Route path="/" element={<Home/>}></Route>
-                          <Route path="/interaction/:customerId" element={<Interaction/>}></Route>
-                          <Route path="/404" element={<NotFound/>}></Route>
-                      </Route>
-                  </Routes>
-              </InteractionRSProvider>
+              <ModalProvider>
+                  <InteractionRSProvider>
+                      <Routes>
+                          <Route path="/" element={<Layout/>}>
+                              <Route path="/" element={<Home/>}></Route>
+                              <Route path="/interaction/:customerId" element={<Interaction/>}></Route>
+                              <Route path="/404" element={<NotFound/>}></Route>
+                          </Route>
+                      </Routes>
+                  </InteractionRSProvider>
+              </ModalProvider>
           </BrowserRouter>
       </>
   );

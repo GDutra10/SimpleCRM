@@ -15,7 +15,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\domain\" />
-    <Folder Include="src\infra\" />
     <Folder Include="src\presentation\" />
   </ItemGroup>
 </Project>

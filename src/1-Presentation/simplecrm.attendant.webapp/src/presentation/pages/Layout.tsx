@@ -1,5 +1,8 @@
 ﻿import {Link, Outlet } from "react-router-dom";
 import {LoginHelper} from "../../domain/helpers/LoginHelper";
+import {ValidationModal} from "../components/modals/ValidationModal";
+import {ErrorModal} from "../components/modals/ErrorModal";
+import {SuccessModal} from "../components/modals/SuccessModal";
 
 function Layout(){
     return (
@@ -17,6 +20,9 @@ function Layout(){
             </nav>
             <div className="App">
                 <Outlet />
+                <ValidationModal></ValidationModal>
+                <ErrorModal></ErrorModal>
+                <SuccessModal></SuccessModal>
             </div>
         </>
     );
