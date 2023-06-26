@@ -5,9 +5,11 @@ using SimpleCRM.Application.Attendant.Contracts;
 using SimpleCRM.Application.Attendant.Contracts.DTOs;
 using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Common.Services;
+using SimpleCRM.Domain.Common.System.Exceptions;
 using SimpleCRM.Domain.Contracts.Repositories;
 using SimpleCRM.Domain.Entities;
 using SimpleCRM.Domain.Managers;
+using SimpleCRM.Domain.Specifications;
 
 namespace SimpleCRM.Application.Attendant.Services;
 
@@ -43,7 +45,7 @@ public class InteractionService : BaseService, IInteractionService
     
     public async Task<InteractionRS> InteractionStartAsync(string token, InteractionStartRQ interactionStartRQ, CancellationToken cancellationToken)
     {
-        var user = await GetUserByToken(token, cancellationToken);
+        var user = await GetUserByTokenAsync(token, cancellationToken);
         var customer = await _customerRepository.GetAsync(interactionStartRQ.CustomerId, cancellationToken);
         var interaction = await _interactionManager.CreateInteractionAsync(user, customer, cancellationToken);
         
@@ -53,9 +55,9 @@ public class InteractionService : BaseService, IInteractionService
         return Mapper.Map<Interaction, InteractionRS>(interaction);
     }
 
-    public async Task<OrderRS> AddOrderItem(string token, OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken)
+    public async Task<OrderRS> AddOrderItemAsync(string token, OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken)
     {
-        var user = await GetUserByToken(token, cancellationToken);
+        var user = await GetUserByTokenAsync(token, cancellationToken);
         var interaction = await _interactionRepository.GetAsync(orderItemAddRQ.InteractionId, cancellationToken);
         var product = await _productRepository.GetAsync(orderItemAddRQ.ProductId, cancellationToken);
         var order = await _orderManager.AddOrderItemAsync(user, interaction, product, cancellationToken);
@@ -63,9 +65,9 @@ public class InteractionService : BaseService, IInteractionService
         return Mapper.Map<Order, OrderRS>(order);
     }
 
-    public async Task<OrderRS> DeleteOrderItem(string token, OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken)
+    public async Task<OrderRS> DeleteOrderItemAsync(string token, OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken)
     {
-        var user = await GetUserByToken(token, cancellationToken);
+        var user = await GetUserByTokenAsync(token, cancellationToken);
         var interaction = await _interactionRepository.GetAsync(orderItemDeleteRQ.InteractionId, cancellationToken);
         var orderItem = await _orderItemRepository.GetAsync(orderItemDeleteRQ.OrderItemId, cancellationToken);
         var order = await _orderManager.DeleteOrderItemAsync(user, interaction, orderItem, cancellationToken);
@@ -75,7 +77,7 @@ public class InteractionService : BaseService, IInteractionService
 
     public async Task<InteractionRS> InteractionFinishAsync(string token, InteractionFinishRQ interactionFinishRQ, CancellationToken cancellationToken)
     {
-        var user = await GetUserByToken(token, cancellationToken);
+        var user = await GetUserByTokenAsync(token, cancellationToken);
         var interaction = await _interactionRepository.GetAsync(interactionFinishRQ.InteractionId, cancellationToken);
         var customer = await _customerRepository.GetAsync(interaction?.CustomerId ?? Guid.Empty, cancellationToken);
 
@@ -87,6 +89,19 @@ public class InteractionService : BaseService, IInteractionService
         return Mapper.Map<Interaction, InteractionRS>(interaction!);
     }
 
+    public async Task<List<InteractionRS>> GetInteractionsInAttendanceAsync(string token, CancellationToken cancellationToken)
+    {
+        var user = await GetUserByTokenAsync(token, cancellationToken);
+        
+        if (user is null)
+            throw new BusinessException("It is not possible to get an interaction without user!");
+
+        var interactionsInAttendance = await _interactionRepository
+            .GetAllAsync(new InteractionUserInAttendanceSpecification(user), cancellationToken);
+
+        return Mapper.Map<List<Interaction>, List<InteractionRS>>(interactionsInAttendance);
+    }
+    
     private static void UpdateCustomer(Customer? customer, CustomerProps? customerProps)
     {
         if (customer == null || customerProps == null) 

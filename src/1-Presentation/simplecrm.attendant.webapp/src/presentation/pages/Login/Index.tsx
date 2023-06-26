@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Control from "../../components/common/Control/Index";
+import Control from "../../components/common/Control";
 import {HttpMethod, SimpleCRMWebAPI} from "../../../infra/api/SimpleCRMWebAPI";
 import {LoginRQ} from "../../../domain/models/api/requests/LoginRQ";
 import {LoginRS} from "../../../domain/models/api/responses/LoginRS";

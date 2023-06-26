@@ -35,7 +35,7 @@ public class InteractionManager
             throw new BusinessException("It is not possible to start an interaction without customer!");
         
         var interactionsInAttendance = await _interactionRepository
-            .GetAllAsync(new InteractionInAttendanceSpecification(customer.Id), cancellationToken);
+            .GetAllAsync(new InteractionCustomerInAttendanceSpecification(customer.Id), cancellationToken);
 
         if (interactionsInAttendance.Any())
             throw new BusinessException($"It is not possible to interact with customer '{customer.Name}'. He is already in attendance!");

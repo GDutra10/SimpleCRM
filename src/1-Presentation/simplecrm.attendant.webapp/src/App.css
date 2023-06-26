@@ -56,6 +56,11 @@ div:disabled{
   opacity: 0.4;
 }
 
+li{
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
 .btn{
   font-weight: 400;
   text-align: center;
@@ -170,4 +175,79 @@ div:disabled{
 .row{
   width: 100%;
   float: left;
+}
+
+.nav-tabs{
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+  margin-bottom: -1px;
+  background: 0 0;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.nav-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.tab-content{
+  display: none;
+}
+
+.tab-content.active{
+  display: block;
+}
+
+.size-1{
+  width: 10%;
+}
+
+.size-2{
+  width: 20%;
+}
+
+.size-3{
+  width: 30%;
+}
+
+.size-4{
+  width: 40%;
+}
+
+.size-5{
+  width: 50%;
+}
+
+.size-6{
+  width: 60%;
+}
+
+.size-7{
+  width: 70%;
+}
+
+.size-8{
+  width: 80%;
+}
+
+.size-9{
+  width: 90%;
+}
+
+.size-10{
+  width: 100%;
 }

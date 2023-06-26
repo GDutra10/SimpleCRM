@@ -31,7 +31,7 @@ public class CustomerService : BaseService, ICustomerService
     
     public async Task<CustomerRS> RegisterCustomerAsync(string token, CustomerRegisterRQ customerRegisterRQ, CancellationToken cancellationToken)
     {
-        var user = await GetUserByToken(token, cancellationToken);
+        var user = await GetUserByTokenAsync(token, cancellationToken);
         var customer = await _customerManager.CreateCustomerAsync(
             customerRegisterRQ.Name ?? string.Empty, 
             customerRegisterRQ.Email ?? string.Empty,

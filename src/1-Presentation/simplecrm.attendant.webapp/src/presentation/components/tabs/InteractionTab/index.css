@@ -9,12 +9,6 @@
     margin-left: 20px;
 }
 
-.row .control{
-    width: 49%;
-    float: left;
-    margin-right: 5px;
-}
-
 .actions{
     width: 100%;
     float: left;
@@ -25,7 +19,11 @@
     margin-top: 25px;
 }
 
-.actions .control{
-    width: 150px;
-    float: left;
+/*.actions .control{*/
+/*    width: 150px;*/
+/*    float: left;*/
+/*}*/
+
+span{
+    font-weight: bold;
 }

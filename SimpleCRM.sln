@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application.Commo
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "simplecrm.attendant.webapp", "src\1-Presentation\simplecrm.attendant.webapp\simplecrm.attendant.webapp.esproj", "{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Backoffice.WebApp", "src\1-Presentation\SimpleCRM.Backoffice.WebApp\SimpleCRM.Backoffice.WebApp.csproj", "{B8FBE5EE-57E6-49CC-8787-003EB75CDD19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B8FBE5EE-57E6-49CC-8787-003EB75CDD19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8FBE5EE-57E6-49CC-8787-003EB75CDD19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8FBE5EE-57E6-49CC-8787-003EB75CDD19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8FBE5EE-57E6-49CC-8787-003EB75CDD19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +133,7 @@ Global
 		{48690004-6520-4D54-A9AB-9D8896832461} = {2359C6F4-0EC2-4239-9FFD-35D909B00732}
 		{0DE161B5-7527-4467-ADF8-F5D1F3078387} = {2359C6F4-0EC2-4239-9FFD-35D909B00732}
 		{E6E10EA9-5562-4BAE-8084-53F1ACF3A823} = {750C3CD6-3568-45E7-9245-E3121297BC93}
+		{B8FBE5EE-57E6-49CC-8787-003EB75CDD19} = {750C3CD6-3568-45E7-9245-E3121297BC93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A232443-68AD-4DDA-B39E-BF11A1F1FD11}

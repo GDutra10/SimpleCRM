@@ -8,6 +8,8 @@ public interface IInteractionService
 
     Task<InteractionRS> InteractionFinishAsync(string token, InteractionFinishRQ interactionFinishRQ, CancellationToken cancellationToken);
 
-    Task<OrderRS> AddOrderItem(string token, OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken);
-    Task<OrderRS> DeleteOrderItem(string token, OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken);
+    Task<OrderRS> AddOrderItemAsync(string token, OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken);
+    Task<OrderRS> DeleteOrderItemAsync(string token, OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken);
+
+    Task<List<InteractionRS>> GetInteractionsInAttendanceAsync(string token, CancellationToken cancellationToken);
 }

@@ -1,5 +1,5 @@
 ﻿import {useState} from "react";
-import Control from "./common/Control/Index";
+import Control from "./common/Control";
 import {HttpMethod, SimpleCRMWebAPI} from "../../infra/api/SimpleCRMWebAPI";
 import {CustomerRegisterRQ} from "../../domain/models/api/requests/CustomerRegisterRQ";
 import {CustomerRS} from "../../domain/models/api/responses/CustomerRS";

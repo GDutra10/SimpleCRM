@@ -25,7 +25,7 @@ public abstract class BaseService : IBaseService
         UserManager = userManager;
     }
     
-    public async Task<User> GetUserByToken(string token, CancellationToken cancellationToken)
+    public async Task<User> GetUserByTokenAsync(string token, CancellationToken cancellationToken)
     {
         var userId = TokenManager.GetId(token);
         

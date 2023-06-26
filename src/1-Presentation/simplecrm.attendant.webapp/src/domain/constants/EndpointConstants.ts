@@ -8,6 +8,7 @@ export enum CustomerEndpoint {
 }
 
 export enum InteractionEndpoint {
+    Interaction = "/Attendant/Interactions",
     Start = "/Attendant/Interactions/Start",
     Finish = "/Attendant/Interactions/Finish",
     Order = "/Attendant/Interactions/Order"

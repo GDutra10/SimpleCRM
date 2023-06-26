@@ -6,6 +6,7 @@ export interface InteractionRS extends BaseRS{
     id: string,
     userId: string,
     customerId: string,
+    creationTime: Date,
     endTime: Date,
     user: UserRS,
     customer: CustomerRS

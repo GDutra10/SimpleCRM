@@ -16,5 +16,6 @@
   <ItemGroup>
     <Folder Include="src\domain\" />
     <Folder Include="src\presentation\" />
+    <Folder Include="src\presentation\components\navs\" />
   </ItemGroup>
 </Project>

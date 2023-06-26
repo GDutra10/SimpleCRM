@@ -1,29 +1,28 @@
-﻿import './Interaction.css';
-import {useNavigate, useParams} from "react-router-dom";
-import {useInteractionContext} from "../../hooks/useInteraction";
-import Control, {SelectOption} from "../../components/common/Control/Index";
-import {useEffect, useState} from "react";
-import {EnvironmentHelper} from "../../../domain/helpers/EnvironmentHelper";
-import {InteractionState} from "../../../domain/models/api/InteractionState";
-import {HttpMethod, SimpleCRMWebAPI} from "../../../infra/api/SimpleCRMWebAPI";
-import {ProductSearchRS} from "../../../domain/models/api/responses/ProductSearchRS";
-import {ProductSearchRQ} from "../../../domain/models/api/requests/ProductSearchRQ";
-import {InteractionEndpoint, ProductEndpoint} from "../../../domain/constants/EndpointConstants";
-import {InteractionRS} from "../../../domain/models/api/responses/InteractionRS";
-import {InteractionFinishRQ} from "../../../domain/models/api/requests/InteractionFinishRQ";
-import {OrderItemAddRQ} from "../../../domain/models/api/requests/OrderItemAddRQ";
-import {OrderRS} from "../../../domain/models/api/responses/OrderRS";
-import {OrderItemDeleteRQ} from "../../../domain/models/api/requests/OrderItemDeleteRQ";
-import {useModalContext} from "../../hooks/useModalContext";
-import {Logger} from "../../../infra/logger/Logger";
+﻿import './index.css';
 
-function Interaction(){
+import {useEffect, useState} from "react";
+import {HttpMethod, SimpleCRMWebAPI} from "../../../../infra/api/SimpleCRMWebAPI";
+import {useModalContext} from "../../../hooks/useModalContext";
+import {useInteractionContext} from "../../../hooks/useInteraction";
+import {ProductSearchRS} from "../../../../domain/models/api/responses/ProductSearchRS";
+import {OrderRS} from "../../../../domain/models/api/responses/OrderRS";
+import {Logger} from "../../../../infra/logger/Logger";
+import {ProductSearchRQ} from "../../../../domain/models/api/requests/ProductSearchRQ";
+import {InteractionEndpoint, ProductEndpoint} from "../../../../domain/constants/EndpointConstants";
+import {InteractionFinishRQ} from "../../../../domain/models/api/requests/InteractionFinishRQ";
+import {InteractionState} from "../../../../domain/models/api/InteractionState";
+import {InteractionRS} from "../../../../domain/models/api/responses/InteractionRS";
+import {OrderItemAddRQ} from "../../../../domain/models/api/requests/OrderItemAddRQ";
+import {OrderItemDeleteRQ} from "../../../../domain/models/api/requests/OrderItemDeleteRQ";
+import {EnvironmentHelper} from "../../../../domain/helpers/EnvironmentHelper";
+import Control, {SelectOption, Size} from "../../common/Control";
+import {DateHelper} from "../../../../domain/helpers/DateHelper";
+
+export function InteractionTab(props: Props){
     const api : SimpleCRMWebAPI = new SimpleCRMWebAPI();
     const modalContext = useModalContext();
-    const navigate = useNavigate();
-    const params = useParams();
-    const customerId = params.customerId;
-    const { interaction, setInteraction } = useInteractionContext();
+    const interactionContext = useInteractionContext();
+    const interaction = interactionContext.interactions.find(i => i.id === props.interactionId);
     const customer = interaction?.customer ?? null;
     let [name, setName] = useState<string>(customer?.name ?? "");
     let [email, setEmail] = useState<string>(customer?.email ?? "");
@@ -31,46 +30,57 @@ function Interaction(){
     let [state, setState] = useState<string>(customer?.state ?? "");
     let [productSearchRS, setProductSearchRS] = useState<ProductSearchRS | null>(null);
     let [orderRS, setOrderRS] = useState<OrderRS | null>(null);
-    let shouldRedirect = false;
+    let shouldEndInteraction = false;
     let productLoaded = false;
-    
+
     useEffect(() => {
         loadProducts_onLoad()
             .then(productSearchRS => {
-                Logger.logDebug("product loaded");
+                Logger.logInfo("product loaded");
                 setProductSearchRS(productSearchRS);
             })
             .catch(e => { Logger.logError("fail to get products!"); });
-        
-        if (shouldRedirect)
-            navigate(-1);
+
+        if (shouldEndInteraction){
+            endInteraction();
+        }
+            
     }, []);
-    
+
     if (!interaction || !customer){
         let message = "invalid interaction, redirecting to home..";
 
         Logger.logWarn(message);
-        shouldRedirect = true;
-        setInteraction(null);
-        
+        shouldEndInteraction = true;
+
         return <>{message}</>
+    }
+
+    function endInteraction(){
+        Logger.logDebug("InteractionId: " + props.interactionId);
+        const interactions = interactionContext.interactions.filter(i => i.id !== props.interactionId);
+
+        Logger.logDebug("Before remove: " + JSON.stringify(interactionContext.interactions));
+        Logger.logDebug("After remove: " + JSON.stringify(interactions));
+        
+        interactionContext.setInteractions(interactions);
     }
     
     async function loadProducts_onLoad(){
         const productSearchRQ : ProductSearchRQ = { onlyActive: true, pageSize: 50, pageNumber: 0};
         const query = new URLSearchParams({onlyActive: ""+productSearchRQ.onlyActive, pageNumber: productSearchRQ.pageNumber.toString(), pageSize: productSearchRQ.pageSize.toString()}).toString();
-        
+
         return await api.executeAsync<ProductSearchRS>(HttpMethod.Get, `${ProductEndpoint.Products}?${query}`, null, true);
     }
 
     async function finish_onClick(event: React.MouseEvent<HTMLButtonElement>){
-        Logger.logInfo("finishing interaction");
-        
+        Logger.logInfo("try finishing interaction");
+
         const button = event.target as HTMLButtonElement;
         let shouldRedirect = false;
         button.disabled = true;
-        
-        const interactionFinishRQ: InteractionFinishRQ = { 
+
+        const interactionFinishRQ: InteractionFinishRQ = {
             interactionId: interaction!.id,
             state: InteractionState[state as keyof typeof InteractionState],
             customerProps: {
@@ -80,30 +90,25 @@ function Interaction(){
             }
         };
         const interactionRS = await api.executeAsync<InteractionRS>(HttpMethod.Put, InteractionEndpoint.Finish, interactionFinishRQ, true);
-        
+
         if (interactionRS.error){
             modalContext.showError(interactionRS.error);
         } else if (interactionRS.validations && interactionRS.validations.length > 0){
             modalContext.showValidations(interactionRS.validations);
         } else {
-            shouldRedirect = true;
+            endInteraction();
         }
-    
+
         button.disabled = false;
-        
-        if (shouldRedirect){
-            navigate("/");
-            setInteraction(null);    
-        }
     }
-    
+
     async function addOrder_onClick(event: React.MouseEvent<HTMLButtonElement>, productId: string){
         Logger.logInfo(`adding order ProductId: ${productId}`);
-        
+
         const button = event.target as HTMLButtonElement;
         button.disabled = true;
-        
-        const orderItemAddRQ: OrderItemAddRQ = { 
+
+        const orderItemAddRQ: OrderItemAddRQ = {
             interactionId: interaction!.id,
             productId: productId
         };
@@ -119,10 +124,10 @@ function Interaction(){
 
         button.disabled = false;
     }
-    
+
     async function removeOrderItem_onClick(event: React.MouseEvent<HTMLButtonElement>, orderItemId: string){
         Logger.logInfo(`removing order item: ${orderItemId}`);
-        
+
         const button = event.target as HTMLButtonElement;
         button.disabled = true;
 
@@ -139,28 +144,30 @@ function Interaction(){
         } else {
             setOrderRS(orderRS);
         }
-        
+
         button.disabled = false;
     }
     
-    return <>
-        <h1>Interaction</h1>
-        <h2>{customer!.name}</h2>
-        {EnvironmentHelper.isDev() ? <>CustomerID: {customer!.id}<br/></> : <></>}
-        {EnvironmentHelper.isDev() ? <>InteractionID: {interaction!.id}<br/></> : <></>}
+    const creationTime = new Date(interaction.creationTime);
+    
+    return <div id={props.interactionId} className="tab-content">
+        <h1>{customer!.name}</h1>
+        <span>{"Started at: " + DateHelper.ToString(creationTime)}</span>
+        {EnvironmentHelper.isDev() ? <p>CustomerID: {customer!.id}</p> : <></>}
+        {EnvironmentHelper.isDev() ? <p>InteractionID: {interaction!.id}<br/></p> : <></>}
         <div className="form">
             <div className="row">
-                <Control label="Name" value={name} onChange={async e => setName(e.target.value)}></Control>
-                <Control label="Email" value={email} onChange={async e => setEmail(e.target.value)}></Control>
-                <Control label="Telephone" value={telephone} onChange={async e => setTelephone(e.target.value)}></Control>
+                <Control label="Name" value={name} size={Size.Size5} onChange={async e => setName(e.target.value)}></Control>
+                <Control label="Email" value={email} size={Size.Size5} onChange={async e => setEmail(e.target.value)}></Control>
+                <Control label="Telephone" value={telephone} size={Size.Size2} onChange={async e => setTelephone(e.target.value)}></Control>
             </div>
-            
+
             <div className="row">
                 <div className="products">
                     <h3>Products</h3>
-                    {productSearchRS === null || productSearchRS === undefined ? <label>loading products...</label> 
-                        : productSearchRS.error && productSearchRS.error !== "" ? <>{productSearchRS.error}</> 
-                            : productSearchRS.validations && productSearchRS.validations.length > 0 ? <>{productSearchRS.validations[0].message}</> 
+                    {productSearchRS === null || productSearchRS === undefined ? <label>loading products...</label>
+                        : productSearchRS.error && productSearchRS.error !== "" ? <>{productSearchRS.error}</>
+                            : productSearchRS.validations && productSearchRS.validations.length > 0 ? <>{productSearchRS.validations[0].message}</>
                                 :<>
                                     <table className="table">
                                         <thead>
@@ -208,21 +215,23 @@ function Interaction(){
                 </div>
             </div>
             <div className="actions">
-                <Control label="State" value={state} type="select" selectOptions={getOptions()} onChange={async e => setState(e.target.value)}></Control>
+                <Control label="State" value={state} size={Size.Size2} type="select" selectOptions={getOptions()} onChange={async e => setState(e.target.value)}></Control>
                 <button className="btn btn-primary" onClick={async event => await finish_onClick(event)}>Finish</button>
             </div>
         </div>
-    </>;
+    </div>
 }
 
 function getOptions() : SelectOption[] {
     const options = new Array<SelectOption>();
-    
+
     options.push({ key: 0, value: InteractionState.NotAvailable, label: InteractionState.NotAvailable});
     options.push({ key: 1, value: InteractionState.NotInterested, label: InteractionState.NotInterested});
     options.push({ key: 2, value: InteractionState.PreSale, label: InteractionState.PreSale});
-        
+
     return options;
 }
 
-export default Interaction;
+type Props = {
+    interactionId: string
+}

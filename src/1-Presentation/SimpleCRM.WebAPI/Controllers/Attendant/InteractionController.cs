@@ -22,6 +22,16 @@ public class InteractionController : AppBaseController
     }
     
     [Authorize]
+    [HttpGet("")]
+    [ProducesResponseType(typeof(List<InteractionRS>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+    public async Task<List<InteractionRS>> GetInteractionAsync(CancellationToken cancellationToken)
+    {
+        return await _interactionService.GetInteractionsInAttendanceAsync(this.GetAccessTokenFromHeader(), cancellationToken);
+    }
+    
+    [Authorize]
     [HttpPost("Start")]
     [ProducesResponseType(typeof(InteractionRS), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationRS), (int)HttpStatusCode.BadRequest)]
@@ -48,7 +58,7 @@ public class InteractionController : AppBaseController
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     public async Task<OrderRS> AddOrderItemAsync(OrderItemAddRQ orderItemAddRQ, CancellationToken cancellationToken)
     {
-        return await _interactionService.AddOrderItem(this.GetAccessTokenFromHeader(), orderItemAddRQ, cancellationToken);
+        return await _interactionService.AddOrderItemAsync(this.GetAccessTokenFromHeader(), orderItemAddRQ, cancellationToken);
     }
 
     [Authorize]
@@ -58,6 +68,6 @@ public class InteractionController : AppBaseController
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     public async Task<OrderRS> DeleteOrderItemAsync(OrderItemDeleteRQ orderItemDeleteRQ, CancellationToken cancellationToken)
     {
-        return await _interactionService.DeleteOrderItem(this.GetAccessTokenFromHeader(), orderItemDeleteRQ, cancellationToken);
+        return await _interactionService.DeleteOrderItemAsync(this.GetAccessTokenFromHeader(), orderItemDeleteRQ, cancellationToken);
     }
 }

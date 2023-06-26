@@ -1,4 +1,4 @@
 ﻿import { useContext } from "react";
-import {InteractionRSContext} from "../contexts/InteractionRSContext";
+import {InteractionContext} from "../contexts/InteractionContext";
 
-export const useInteractionContext = () => useContext(InteractionRSContext);
+export const useInteractionContext = () => useContext(InteractionContext);
