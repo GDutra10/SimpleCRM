@@ -3,6 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace SimpleCRM.Application.Common.Contracts.DTOs;
 
-public abstract class BaseRS
+public class BaseRS
 {
 }
