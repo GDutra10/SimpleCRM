@@ -1,0 +1,9 @@
+﻿@using SimpleCRM.Application.Common.Contracts.DTOs
+@if (ViewBag.Error is not null)
+{
+    var errorRS = (ErrorRS)ViewBag.ErrorRS;
+            
+    <div class="alert alert-danger" role="alert">
+        @errorRS.Error
+    </div>    
+}
