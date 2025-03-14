@@ -1,9 +1,12 @@
 ﻿@using SimpleCRM.Application.Common.Contracts.DTOs
-@if (ViewBag.Error is not null)
+@if (ViewBag.ValidationRS is not null)
 {
-    var errorRS = (ErrorRS)ViewBag.ErrorRS;
+    var validationRS = (ValidationRS)ViewBag.ValidationRS;
             
-    <div class="alert alert-danger" role="alert">
-        @errorRS.Error
+    <div class="alert alert-warning" role="alert">
+        @foreach (var validation in validationRS.Validations!)
+        {
+            <label>@string.Concat(validation.Field, validation.Message)</label>
+        }
     </div>    
 }

@@ -1,6 +1,8 @@
-﻿namespace SimpleCRM.Application.Backoffice.Contracts.Services;
+﻿using SimpleCRM.Application.Backoffice.Contracts.DTOs;
 
-public class IInteractionService
+namespace SimpleCRM.Application.Backoffice.Contracts.Services;
+
+public interface IInteractionService
 {
-    
+    Task<InteractionStartRS> StartAsync(Guid orderId, CancellationToken cancellationToken);
 }

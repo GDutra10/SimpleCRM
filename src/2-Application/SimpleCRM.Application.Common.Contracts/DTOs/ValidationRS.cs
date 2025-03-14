@@ -5,7 +5,7 @@ namespace SimpleCRM.Application.Common.Contracts.DTOs;
 public class ValidationRS : BaseRS
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<Validation>? Validations { get; private set; }
+    public List<Validation>? Validations { get; set; }
 
     public void AddValidation(string field, string message)
     {

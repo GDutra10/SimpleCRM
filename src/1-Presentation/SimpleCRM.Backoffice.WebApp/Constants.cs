@@ -1,4 +1,4 @@
-﻿namespace SimpleCRM.Backoffice.WebApp.Constants;
+﻿namespace SimpleCRM.Backoffice.WebApp;
 
 public static class Constants
 {

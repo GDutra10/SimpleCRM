@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SimpleCRM.Application.Backoffice.Contracts.DTOs;
 using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.Backoffice.WebApp.System.Exception;
@@ -11,6 +13,8 @@ public class SimpleCRMApi : ISimpleCRMApi
     private readonly ILogger<SimpleCRMApi> _logger;
     private readonly Uri _urlBase;
     private readonly HttpClient _httpClient;
+
+    private readonly JsonSerializerOptions _jsonOptions = new () { PropertyNameCaseInsensitive = true, Converters  = { new JsonStringEnumConverter() }};
 
     public SimpleCRMApi(
         ILogger<SimpleCRMApi> logger,
@@ -34,12 +38,11 @@ public class SimpleCRMApi : ISimpleCRMApi
 
     public async Task<bool> ValidateTokenAsync(string accessToken, CancellationToken cancellationToken)
     {
-        var httpRequestMessage = GetHttpRequestMessage(HttpMethod.Post, "Authentication/Login", accessToken: accessToken);
+        var httpRequestMessage = GetHttpRequestMessage(HttpMethod.Post, "Authentication/ValidateToken", accessToken: accessToken);
 
         var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage, cancellationToken);
-        var valid = await httpResponseMessage.Content.ReadFromJsonAsync<bool>(cancellationToken: cancellationToken);
 
-        return valid;
+        return httpResponseMessage.StatusCode == HttpStatusCode.OK;
     }
 
     public async Task<(OrderRS?, ValidationRS?, ErrorRS?)> GetOrderAsync(string accessToken, string orderId, CancellationToken cancellationToken)
@@ -54,6 +57,20 @@ public class SimpleCRMApi : ISimpleCRMApi
         var httpRequestMessage = GetHttpRequestMessage(HttpMethod.Put, $"Backoffice/Orders/{orderId}", orderUpdateRQ, accessToken: accessToken);
         
         return await GetResultOrThrowAsync<BaseRS>(httpRequestMessage, cancellationToken);
+    }
+
+    public async Task<(OrderSearchRS?, ValidationRS?, ErrorRS?)> GetOrdersAsync(string accessToken, OrderSearchRQ orderSearchRQ, CancellationToken cancellationToken)
+    {
+        var httpRequestMessage = GetHttpRequestMessage(HttpMethod.Post, $"Backoffice/Orders", orderSearchRQ, accessToken: accessToken);
+        
+        return await GetResultOrThrowAsync<OrderSearchRS>(httpRequestMessage, cancellationToken);
+    }
+
+    public async Task<(InteractionStartRS?, ValidationRS?, ErrorRS?)> StartInteractionAsync(string accessToken, string orderId, CancellationToken cancellationToken)
+    {
+        var httpRequestMessage = GetHttpRequestMessage(HttpMethod.Post, $"Backoffice/Interactions/Start?orderId={orderId}", accessToken: accessToken);
+        
+        return await GetResultOrThrowAsync<InteractionStartRS>(httpRequestMessage, cancellationToken);
     }
 
     private HttpRequestMessage GetHttpRequestMessage(HttpMethod httpMethod, string relativeUri, object? content = null, string? accessToken = null)
@@ -79,17 +96,19 @@ public class SimpleCRMApi : ISimpleCRMApi
         _logger.LogDebug("HttpRequestMessage: {HttpRequestMessage}", httpRequestMessage);
         
         var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage, cancellationToken);
-
+        var response = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+        _logger.LogDebug("response: {Response}", response);
+        
         switch (httpResponseMessage.StatusCode)
         {
             case HttpStatusCode.BadRequest:
-                validationRS = await httpResponseMessage.Content.ReadFromJsonAsync<ValidationRS>(cancellationToken: cancellationToken);
+                validationRS = JsonSerializer.Deserialize<ValidationRS>(response, _jsonOptions);
                 return (result, validationRS, errorRS);
             case HttpStatusCode.InternalServerError:
-                errorRS = await httpResponseMessage.Content.ReadFromJsonAsync<ErrorRS>(cancellationToken: cancellationToken);
+                errorRS = JsonSerializer.Deserialize<ErrorRS>(response, _jsonOptions);
                 return (result, validationRS, errorRS);
             case HttpStatusCode.OK:
-                result = await httpResponseMessage.Content.ReadFromJsonAsync<T>(cancellationToken: cancellationToken);
+                result = JsonSerializer.Deserialize<T>(response, _jsonOptions);
                 return (result, validationRS, errorRS);
             case HttpStatusCode.NoContent:
                 return (new T(), validationRS, errorRS);

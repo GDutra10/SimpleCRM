@@ -1,8 +1,91 @@
-﻿@model dynamic
+﻿@using SimpleCRM.Application.Backoffice.Contracts.DTOs
+@using SimpleCRM.Application.Common.Contracts.DTOs
+@using SimpleCRM.Domain.Entities
+@model dynamic
 
 @{
-    ViewBag.Title = "title";
+    OrderSearchRS orderSearchRS = ViewBag.OrderSearchRS;
+    ViewBag.Title = "Order";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+@if (Html.ViewBag.InteractionStartRS is null)
+{
+    <h2>Orders</h2>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Creation Date</th>
+                <th>Products</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (orderSearchRS is null)
+            {
+                <tr><td>An error occurred, please reload the page!</td></tr>
+            }
+            else
+            {
+                foreach (var order in orderSearchRS.Records)
+                {
+                    <tr>
+                        <td>@order.CreationTime</td>
+                        <td>@order.OrderItems.Count</td>
+                        <td>
+                            @* TODO: redirect to new Page to view the Order *@
+                            @Html.ActionLink("View", "Index", new { orderId = order.Id }, new { @class = "btn btn-primary"})
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    var orderItems = ((OrderRS) ViewBag.OrderRS).OrderItems;
+    var interactionStartRS = (InteractionStartRS) ViewBag.InteractionStartRS;
+    
+    <h2>Order</h2>
+    <h3>Id: @ViewBag.OrderId</h3>
+    <h3>Pre Sale</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <label class="form-label">Name</label>
+            <input class="form-control" type="text" value="@interactionStartRS.OrderInteraction.Customer.Name"/>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input class="form-control" type="text" value="@interactionStartRS.OrderInteraction.Customer.Email"/>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Telephone</label>
+            <input class="form-control" type="text" value="@interactionStartRS.OrderInteraction.Customer.Telephone"/>
+        </div>
+        
+        <div class="col-md-6">
+            <h4>Order Items</h4>
+            <table class="table">
+                <caption></caption>
+                <thead>
+                <tr>
+                    <th>Product</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var orderItem in orderItems)
+                {
+                    <tr>
+                        <td>@orderItem.Product.Name</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+

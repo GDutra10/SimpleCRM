@@ -24,24 +24,22 @@ function App() {
     }
 
     Logger.logInfo("checking the access token");
-    new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, AuthenticationEndpoint.ValidateToken, null, true)
-  
+    new SimpleCRMWebAPI().executeAsync<boolean>(HttpMethod.Post, AuthenticationEndpoint.ValidateToken, null, true);
+
     return (
-      <>
-          <BrowserRouter>
-              <ModalProvider>
-                  <InteractionProvider>
-                      <Routes>
-                          <Route path="/" element={<Layout/>}>
-                              <Route path="/" element={<Home/>}></Route>
-                              <Route path="/404" element={<NotFound/>}></Route>
-                          </Route>
-                      </Routes>
-                  </InteractionProvider>
-              </ModalProvider>
-          </BrowserRouter>
-      </>
-  );
+        <BrowserRouter>
+            <ModalProvider>
+                <InteractionProvider>
+                    <Routes>
+                        <Route path="/" element={<Layout/>}>
+                            <Route path="/" element={<Home/>}></Route>
+                            <Route path="/404" element={<NotFound/>}></Route>
+                        </Route>
+                    </Routes>
+                </InteractionProvider>
+            </ModalProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;

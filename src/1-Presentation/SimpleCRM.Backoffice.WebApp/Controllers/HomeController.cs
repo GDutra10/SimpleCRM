@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SimpleCRM.Backoffice.WebApp.Attributes;
 using SimpleCRM.Backoffice.WebApp.Models;
 
 namespace SimpleCRM.Backoffice.WebApp.Controllers;
 
-public class HomeController : Controller
+public class HomeController : BaseController
 {
     private readonly ILogger<HomeController> _logger;
 
@@ -13,12 +15,8 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [SimpleCRMAuthorize]
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
     {
         return View();
     }

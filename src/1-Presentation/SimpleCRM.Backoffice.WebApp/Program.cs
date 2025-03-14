@@ -1,11 +1,28 @@
+using Microsoft.AspNetCore.HttpLogging;
+using Serilog;
 using SimpleCRM.Backoffice.WebApp.API;
+using SimpleCRM.Backoffice.WebApp.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration)
+);
+builder.Services.AddHttpLogging(options =>
+{
+    options.LoggingFields = HttpLoggingFields.ResponsePropertiesAndHeaders |
+                            HttpLoggingFields.ResponseBody |
+                            HttpLoggingFields.RequestPropertiesAndHeaders |
+                            HttpLoggingFields.RequestBody;
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .Services.AddSingleton<ISimpleCRMApi, SimpleCRMApi>()
-    .AddHttpClient();
+    .Services
+    .AddScoped<ISimpleCRMApi, SimpleCRMApi>()
+    .AddScoped(typeof(SimpleCRMAuthorizeFilter))
+    .AddHttpClient()
+    .AddSession();
 
 var app = builder.Build();
 
@@ -19,10 +36,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();  
 
 app.UseRouting();
 
-app.UseAuthorization();
+// app.UseAuthorization();
+// app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",

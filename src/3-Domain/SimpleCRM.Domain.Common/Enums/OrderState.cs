@@ -2,6 +2,7 @@
 
 public enum OrderState
 {
+    None,
     PreConfirmed,
     Confirmed,
     Canceled,

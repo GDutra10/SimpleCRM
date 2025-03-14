@@ -14,6 +14,8 @@ using SimpleCRM.Application.Admin.Validators;
 using SimpleCRM.Application.Attendant.Contracts.Services;
 using SimpleCRM.Application.Attendant.Services;
 using SimpleCRM.Application.Attendant.Validators;
+using SimpleCRM.Application.Backoffice.Contracts.Services;
+using SimpleCRM.Application.Backoffice.Services;
 using SimpleCRM.Application.Backoffice.Validators;
 using SimpleCRM.Application.Common.Contracts.DTOs;
 using SimpleCRM.Application.Common.Contracts.Services;
@@ -65,6 +67,7 @@ public static class WebApplicationBuilderExtensions
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
             })
             .ConfigureApiBehaviorOptions(options =>
             {
@@ -141,9 +144,11 @@ public static class WebApplicationBuilderExtensions
             .AddScoped<IAuthenticationService, AuthenticationService>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<ICustomerService, CustomerService>()
-            .AddScoped<IInteractionService, InteractionService>()
+            .AddScoped<SimpleCRM.Application.Attendant.Contracts.Services.IInteractionService, SimpleCRM.Application.Attendant.Services.InteractionService>()
+            .AddScoped<SimpleCRM.Application.Backoffice.Contracts.Services.IInteractionService, SimpleCRM.Application.Backoffice.Services.InteractionService>()
             .AddScoped<IAdminProductService, AdminProductService>()
             .AddScoped<IProductBaseService, ProductBaseService>()
+            .AddScoped<IOrderService, OrderService>()
             // managers
             .AddScoped<UserManager>()
             .AddScoped<TokenManager>()

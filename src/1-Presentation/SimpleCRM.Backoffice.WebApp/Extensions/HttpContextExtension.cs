@@ -1,6 +1,7 @@
 ﻿namespace SimpleCRM.Backoffice.WebApp.Extensions;
 
-public class HttpContextExtension
+public static class HttpContextExtension
 {
-    
+    public static bool IsLogged(this HttpContext httpContext)
+        => httpContext.Session.TryGetValue(Constants.Session.AccessToken, out _);
 }

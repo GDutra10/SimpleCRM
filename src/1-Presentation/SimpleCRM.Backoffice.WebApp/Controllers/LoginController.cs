@@ -20,13 +20,26 @@ public class LoginController : BaseController
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(string email, string password, CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return View();
+        
         var response = await _simpleCRMApi.LoginAsync(new LoginRQ {Email = email, Password = password}, cancellationToken);
 
         if (!ValidateResponse(response)) 
-            return RedirectToAction("Index", "Home");
+            return View();
+        
+        var loginRS = response.Item1!;
+        HttpContext.Session.SetString(Constants.Session.AccessToken, loginRS.AccessToken);
 
-        return View();
+        return RedirectToAction("Index", "Home", cancellationToken);
+    }
+
+    public async Task<IActionResult> Logout(CancellationToken cancellationToken)
+    {
+        HttpContext.Session.Remove(Constants.Session.AccessToken);
+        return RedirectToAction("Index", "Login", cancellationToken);
     }
 }

@@ -1,10 +1,11 @@
 ﻿import {SessionConstants} from "../../domain/constants/SessionConstants";
 import {LoginHelper} from "../../domain/helpers/LoginHelper";
+import {BaseRS} from "../../domain/models/api/responses/BaseRS";
 import {Logger} from "../logger/Logger";
 
 export class SimpleCRMWebAPI {
-    protected readonly baseUrl: string = "https://localhost:44312";
-    
+    protected readonly baseUrl: string = "https://localhost:7280"; // TODO: set to env
+
     async executeAsync<T>(httpMethod: HttpMethod, endpoint: string, body: any | null = null, mustUseAccessToken: boolean = false) : Promise<T> {
         
         try{

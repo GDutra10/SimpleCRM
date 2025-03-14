@@ -1,4 +1,6 @@
-﻿@model dynamic
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SimpleCRM.Application.Common.Contracts.DTOs
+@model SimpleCRM.Application.Common.Contracts.DTOs.LoginRQ
 
 @{
     ViewBag.Title = "Login";
@@ -6,15 +8,17 @@
 }
 
 <h2>Login</h2>
-<form method="POST">
+<form method="post">
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" placeholder="name@youremail.com">
+        @* <input type="email" class="form-control" id="email" name="email" placeholder="name@youremail.com" value="@Model.Email"> *@
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", name="email", required = true})
     </div>
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password">
+        @* <input type="password" class="form-control" id="password" name="password" value="@Model.Password"> *@
+        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password", name="password", required = true})  
     </div>
 
     <button type="submit" class="btn btn-primary">Login</button>
